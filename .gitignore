@@ -2,5 +2,9 @@
 /node_modules
 .env
 .idea
-/public
+/public/packages
+/public/js
+/public/css
+/public/images
+/public/fonts
 composer.lock
