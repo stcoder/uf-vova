@@ -14,4 +14,4 @@ Admin::model('\App\Slide')->title('Слайды')->with('page')->filters(functio
 	FormItem::textarea('description', 'Описание');
 	FormItem::select('page_id', 'Страница')->list('\App\Page')->required();
 	FormItem::image('image', 'Картинка')->required(true);
-})->async(true);
+});

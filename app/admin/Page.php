@@ -17,4 +17,4 @@ Admin::model('\App\Page')->title('Страницы')->with()->filters(function (
 	FormItem::text('title', 'Заголовок')->required();
 	FormItem::checkbox('published', 'Опубликовать');
 	FormItem::ckeditor('content', 'Содержание')->required();
-})->async(true);
+});
