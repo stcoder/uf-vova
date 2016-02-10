@@ -1,0 +1,62 @@
+@import "bootstrap/bootstrap";
+
+@btn-font-weight: 300;
+@font-family-sans-serif: "Roboto", Helvetica, Arial, sans-serif;
+
+body, label, .checkbox label {
+	font-weight: 300;
+}
+
+.half-rule {
+	width: 100px;
+	margin: 40px auto;
+}
+
+.lead {
+	font-size: 21px;
+	margin-bottom: 20px;
+	font-weight: 300;
+	line-height: 1.4;
+}
+
+.navbar {
+	margin-bottom: 0;
+}
+
+.fp-controlArrow.fp-next {
+	border-color: transparent transparent transparent rgba(255, 255, 255, .4);
+	transition: all 2s;
+
+	&:hover {
+		border-color: transparent transparent transparent rgba(255, 255, 255, .8);
+	}
+}
+
+.fp-controlArrow.fp-prev {
+	border-color: transparent rgba(255, 255, 255, .4) transparent transparent;
+	transition: all 2s;
+
+	&:hover {
+		border-color: transparent rgba(255, 255, 255, .8) transparent transparent;
+	}
+}
+
+.table>thead>tr>th.table-row-head {
+	vertical-align: middle;
+	text-align: center;
+}
+
+.section {
+	&-valign-top {
+		vertical-align: top;
+	}
+
+	.slide {
+		text-align: center;
+		background-size: cover;
+	}
+
+	&-center {
+		text-align: center;
+	}
+}
