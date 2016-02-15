@@ -1,11 +1,23 @@
 <?php namespace App\Columns;
 
-use SleepingOwl\Admin\Columns\Column\BaseColumn;
+use SleepingOwl\Admin\Columns\Column\NamedColumn;
 
-class Published extends BaseColumn {
-    public function render($instance, $totalCount) {
-        $html = '<span class="label label-%s">%s</span>';
-        $content = ($instance->{$this->name}) ? sprintf($html, 'success', 'Да') : sprintf($html, 'danger', 'Нет');
-        return parent::render($instance, $totalCount, $content);
+class Published extends NamedColumn
+{
+
+    /**
+     * @return View
+     */
+    public function render()
+    {
+        $value = $this->getValue($this->instance, $this->name());
+        $params = [
+            'class' => $value ? 'success' : 'danger',
+            'label' => $value ? 'Да' : 'Нет',
+            'publishedable' => $value,
+            'url' => route('page', ['page' => $this->instance->slug]),
+            'published_at' => $value ? $this->instance->published_at : null
+        ];
+        return view('admin.column.published', $params);
     }
 }

@@ -16,7 +16,6 @@ class CreatePagesTable extends Migration {
 			$table->engine = 'InnoDB';
 
 			$table->increments('id');
-			$table->integer('admin_id')->unsigned();
 			$table->string('title')->nullable();
 			$table->string('slug')->nullable()->index();
 			$table->longText('content')->nullable();
@@ -25,7 +24,6 @@ class CreatePagesTable extends Migration {
 			$table->text('meta_others')->nullable();
 			$table->boolean('published')->default(false);
 
-			$table->foreign('admin_id')->references('id')->on('administrators');
 			$table->timestamp('published_at');
 			$table->softDeletes();
 			$table->timestamps();

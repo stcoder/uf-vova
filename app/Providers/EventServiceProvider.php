@@ -25,10 +25,6 @@ class EventServiceProvider extends ServiceProvider {
 	public function boot(DispatcherContract $events)
 	{
 		parent::boot($events);
-
-		\App\Page::creating(function($page) {
-			$page->admin_id = \AdminAuth::user()->id;
-		});
 	}
 
 }

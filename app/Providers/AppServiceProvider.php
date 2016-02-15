@@ -14,6 +14,7 @@ class AppServiceProvider extends ServiceProvider {
 		\Shortcode::register('slider', '\App\Shortcode\Slider');
 		\Shortcode::register('section', '\App\Shortcode\Section');
 		\Shortcode::register('iframe', '\App\Shortcode\Iframe');
+		\Shortcode::register('timeline', '\App\Shortcode\Timeline');
 	}
 
 	/**

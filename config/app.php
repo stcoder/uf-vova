@@ -150,8 +150,10 @@ return [
 
 		'Cviebrock\EloquentSluggable\SluggableServiceProvider',
 
-        'SleepingOwl\Admin\AdminServiceProvider',
-        'Illuminate\Html\HtmlServiceProvider',
+		'SleepingOwl\Admin\AdminServiceProvider',
+		'Illuminate\Html\HtmlServiceProvider',
+		'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
+		'Intervention\Image\ImageServiceProvider',
 
 	],
 
@@ -201,19 +203,22 @@ return [
 		'Validator' => 'Illuminate\Support\Facades\Validator',
 		'View'      => 'Illuminate\Support\Facades\View',
 
-        'Admin'        => 'SleepingOwl\Admin\Admin',
-        'AdminAuth'    => 'SleepingOwl\AdminAuth\Facades\AdminAuth',
-        'AdminRouter'  => 'SleepingOwl\Admin\Facades\AdminRouter',
-        'AssetManager' => 'SleepingOwl\Admin\AssetManager\AssetManager',
-        'Column'       => 'SleepingOwl\Admin\Columns\Column',
-        'FormItem'     => 'SleepingOwl\Admin\Models\Form\FormItem',
-        'ModelItem'    => 'SleepingOwl\Admin\Models\ModelItem',
+		'Admin'         => 'SleepingOwl\Admin\Admin',
+		'AdminAuth'     => 'SleepingOwl\AdminAuth\Facades\AdminAuth',
+		'Column'        => 'SleepingOwl\Admin\Columns\Column',
+		'ColumnFilter'  => 'SleepingOwl\Admin\ColumnFilters\ColumnFilter',
+		'Filter'        => 'SleepingOwl\Admin\Filter\Filter',
+		'AdminDisplay'  => 'SleepingOwl\Admin\Display\AdminDisplay',
+		'AdminForm'     => 'SleepingOwl\Admin\Form\AdminForm',
+		'AdminTemplate' => 'SleepingOwl\Admin\Templates\Facade\AdminTemplate',
+		'FormItem'      => 'SleepingOwl\Admin\FormItems\FormItem',
 
         'Form' => 'Illuminate\Html\FormFacade',
         'Html' => 'Illuminate\Html\HtmlFacade',
 
 		'Shortcode' => 'Pingpong\Shortcode\ShortcodeFacade',
 		'Widget' => 'Pingpong\Widget\WidgetFacade',
+		'Image' => 'Intervention\Image\Facades\Image',
 
 	],
 

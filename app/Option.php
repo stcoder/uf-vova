@@ -1,7 +1,16 @@
 <?php namespace App;
 
-use SleepingOwl\Models\SleepingOwlModel as Model;
+use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\Option
+ *
+ * @property integer $id
+ * @property string $name
+ * @property string $title
+ * @property string $value
+ * @property string $other_opts
+ */
 class Option extends Model {
 
 	public $timestamps = false;

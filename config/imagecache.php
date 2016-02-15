@@ -16,7 +16,7 @@ return array(
     |
     */
    
-    'route' => "images",
+    'route' => 'images',
 
     /*
     |--------------------------------------------------------------------------
@@ -31,8 +31,7 @@ return array(
     */
     
     'paths' => array(
-        public_path('upload'),
-        public_path('images')
+        public_path('images/uploads')
     ),
 
     /*
@@ -55,6 +54,7 @@ return array(
         'small' => 'Intervention\Image\Templates\Small',
         'medium' => 'Intervention\Image\Templates\Medium',
         'large' => 'Intervention\Image\Templates\Large',
+        'big_slide' => 'App\Image\Templates\BigSlide'
     ),
 
     /*

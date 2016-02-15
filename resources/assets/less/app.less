@@ -1,4 +1,6 @@
 @import "bootstrap/bootstrap";
+@import "animate";
+@import "timeline";
 
 @btn-font-weight: 300;
 @font-family-sans-serif: "Roboto", Helvetica, Arial, sans-serif;
@@ -48,7 +50,9 @@ body, label, .checkbox label {
 
 .section {
 	&-valign-top {
-		vertical-align: top;
+		.fp-tableCell {
+			vertical-align: top;
+		}
 	}
 
 	.slide {
