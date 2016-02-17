@@ -1,0 +1,24 @@
+{
+  "name": "uf-vova",
+  "description": "",
+  "main": "",
+  "authors": [
+    "stcoder <eni.basic@gmail.com>"
+  ],
+  "license": "MIT",
+  "moduleType": [],
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "waypoints": "^4.0.0",
+    "owl.carousel": "^2.0.0-beta.3",
+    "bootstrap": "^3.3.6"
+  }
+}
