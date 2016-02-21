@@ -27,7 +27,7 @@
       </div>
       <div id="navbar" class="collapse navbar-collapse">
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="#"><span>О клубе</span></a></li>
+          <li><a href="/about-clube.html" data-nav-section="about-clube"><span>О клубе</span></a></li>
           <li><a href="#"><span>Расписание и стоимость</span></a></li>
           <li><a href="#"><span>Лента событий</span></a></li>
           <li><a href="#"><span>Медиа</span></a></li>
@@ -109,41 +109,139 @@
 {{-- End slider --}}
 
 {{-- Start about clube --}}
-<div id="about-clube" data-section="about-clube">
-
-</div>
-{{-- End about clube --}}
-
-<div class="container">
-  <div class="row">
-    <div class="col-sm-4">
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores blanditiis, commodi consequuntur dolores facere iusto praesentium similique. Expedita magnam nemo, quis recusandae reprehenderit repudiandae veniam vitae voluptatibus. Aliquid incidunt, ratione!</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus ad blanditiis, cumque distinctio dolorum ducimus enim error fuga fugit illo laudantium nesciunt nisi provident reiciendis reprehenderit sapiente tempora veniam voluptate!</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam commodi cupiditate dolores explicabo iure laboriosam, nisi officiis, porro qui recusandae tempora vitae? Impedit in officia perferendis sequi vitae voluptate, voluptatum.</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste maiores nesciunt praesentium reprehenderit rerum veniam veritatis voluptatem. Cum est, modi natus nobis optio perferendis reprehenderit tempore! Doloribus eius perspiciatis qui?</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem commodi cupiditate deleniti eum facilis harum, maiores nisi odio quas quasi quidem rem tempora, tempore voluptatem voluptates! Architecto autem et temporibus?</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores blanditiis, commodi consequuntur dolores facere iusto praesentium similique. Expedita magnam nemo, quis recusandae reprehenderit repudiandae veniam vitae voluptatibus. Aliquid incidunt, ratione!</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus ad blanditiis, cumque distinctio dolorum ducimus enim error fuga fugit illo laudantium nesciunt nisi provident reiciendis reprehenderit sapiente tempora veniam voluptate!</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam commodi cupiditate dolores explicabo iure laboriosam, nisi officiis, porro qui recusandae tempora vitae? Impedit in officia perferendis sequi vitae voluptate, voluptatum.</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste maiores nesciunt praesentium reprehenderit rerum veniam veritatis voluptatem. Cum est, modi natus nobis optio perferendis reprehenderit tempore! Doloribus eius perspiciatis qui?</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem commodi cupiditate deleniti eum facilis harum, maiores nisi odio quas quasi quidem rem tempora, tempore voluptatem voluptates! Architecto autem et temporibus?</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores blanditiis, commodi consequuntur dolores facere iusto praesentium similique. Expedita magnam nemo, quis recusandae reprehenderit repudiandae veniam vitae voluptatibus. Aliquid incidunt, ratione!</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus ad blanditiis, cumque distinctio dolorum ducimus enim error fuga fugit illo laudantium nesciunt nisi provident reiciendis reprehenderit sapiente tempora veniam voluptate!</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam commodi cupiditate dolores explicabo iure laboriosam, nisi officiis, porro qui recusandae tempora vitae? Impedit in officia perferendis sequi vitae voluptate, voluptatum.</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste maiores nesciunt praesentium reprehenderit rerum veniam veritatis voluptatem. Cum est, modi natus nobis optio perferendis reprehenderit tempore! Doloribus eius perspiciatis qui?</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem commodi cupiditate deleniti eum facilis harum, maiores nisi odio quas quasi quidem rem tempora, tempore voluptatem voluptates! Architecto autem et temporibus?</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores blanditiis, commodi consequuntur dolores facere iusto praesentium similique. Expedita magnam nemo, quis recusandae reprehenderit repudiandae veniam vitae voluptatibus. Aliquid incidunt, ratione!</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus ad blanditiis, cumque distinctio dolorum ducimus enim error fuga fugit illo laudantium nesciunt nisi provident reiciendis reprehenderit sapiente tempora veniam voluptate!</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam commodi cupiditate dolores explicabo iure laboriosam, nisi officiis, porro qui recusandae tempora vitae? Impedit in officia perferendis sequi vitae voluptate, voluptatum.</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste maiores nesciunt praesentium reprehenderit rerum veniam veritatis voluptatem. Cum est, modi natus nobis optio perferendis reprehenderit tempore! Doloribus eius perspiciatis qui?</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem commodi cupiditate deleniti eum facilis harum, maiores nisi odio quas quasi quidem rem tempora, tempore voluptatem voluptates! Architecto autem et temporibus?</p>
+<div id="about-clube" data-section="about-clube" style="background-image: url('http://subtlepatterns2015.subtlepatterns.netdna-cdn.com/patterns/concrete_seamless.png'); background-attachment: fixed;">
+  <div class="container-fluid">
+    {{-- Start section header --}}
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="history">
+          <div class="section-header">
+            <h2 class="section-header-title text-center">О клубе</h2>
+            <h3 class="section-header-title-sub text-center">история развития</h3>
+            <div class="section-header-divider">
+              <span class="section-header-divider-left"></span>
+              <i class="section-header-divider-icon glyphicon glyphicon-star"></i>
+              <span class="section-header-divider-right"></span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+    {{-- End section header --}}
+
+    {{-- Start history items --}}
+    <div class="row">
+      <div class="history-wrapper">
+        <div class="history-container">
+
+          {{-- Start history item --}}
+          <div class="history-item">
+            <div class="history-caption-container">
+              <div class="history-caption __to-animate">
+                <h3 class="history-caption-date">2008 <small>год</small></h3>
+                <div class="history-caption-message">С чего все началось</div>
+              </div>
+            </div>
+            <div class="history-body-container">
+              <div class="history-line"></div>
+              <div class="history-badge">
+                <div class="__to-animate anim-delay-0-3 history-badge-circle"></div>
+                <i class="__to-animate anim-delay-0-3 glyphicon glyphicon-arrow-right history-badge-icon"></i>
+              </div>
+              <div class="history-body">
+                <h3 class="history-body-title __to-animate anim-delay-0-3">Становление клуба</h3>
+                <div class="history-body-content __to-animate anim-delay-0-3">
+                  <p>Президент федерации Вин Чун Урала М. Бурдин возложил на плечи нынешнего тренера Владимира Медведева обязаности главного инструктора федерации.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          {{-- End history item --}}
+
+          {{-- Start history item --}}
+          <div class="history-item">
+            <div class="history-caption-container">
+              <div class="history-caption __to-animate">
+                <h3 class="history-caption-date">2008 <small>год</small></h3>
+                <div class="history-caption-message">Семинар</div>
+              </div>
+            </div>
+            <div class="history-body-container">
+              <div class="history-line"></div>
+              <div class="history-badge">
+                <div class="__to-animate anim-delay-0-3 history-badge-circle"></div>
+                <i class="__to-animate anim-delay-0-3 glyphicon glyphicon-arrow-right history-badge-icon"></i>
+              </div>
+              <div class="history-body">
+                <h3 class="history-body-title __to-animate anim-delay-0-3">Семинар Анатолия Белощина</h3>
+                <div class="history-body-content __to-animate anim-delay-0-3">
+                  <p>Был проведен третий семинар Анатолия Белощина Президента DMWCI, на котором была проведена успешная аттестация наших воспитаников на 1 уровень техники Siu Lim Tao.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          {{-- End history item --}}
+
+          {{-- Start history item --}}
+          <div class="history-item">
+            <div class="history-caption-container">
+              <div class="history-caption __to-animate">
+                <h3 class="history-caption-date">2008 <small>год</small></h3>
+                <div class="history-caption-message">Расширяемся</div>
+              </div>
+            </div>
+            <div class="history-body-container">
+              <div class="history-line"></div>
+              <div class="history-badge">
+                <div class="__to-animate anim-delay-0-3 history-badge-circle"></div>
+                <i class="__to-animate anim-delay-0-3 glyphicon glyphicon-arrow-right history-badge-icon"></i>
+              </div>
+              <div class="history-body">
+                <h3 class="history-body-title __to-animate anim-delay-0-3">Выход из состава</h3>
+                <div class="history-body-content __to-animate anim-delay-0-3">
+                  <p>Клуб вышел из состава Федерации Вин Чун Урала и присоединился к Международной Организации Вин Чун (International Wing Chun Organization).</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          {{-- End history item --}}
+
+          {{-- Start history item --}}
+          <div class="history-item">
+            <div class="history-caption-container">
+              <div class="history-caption __to-animate">
+                <h3 class="history-caption-date">2008 <small>год</small></h3>
+                <div class="history-caption-message">С чего все началось</div>
+              </div>
+            </div>
+            <div class="history-body-container">
+              <div class="history-line"></div>
+              <div class="history-badge">
+                <div class="__to-animate anim-delay-0-3 history-badge-circle"></div>
+                <i class="__to-animate anim-delay-0-3 glyphicon glyphicon-arrow-right history-badge-icon"></i>
+              </div>
+              <div class="history-body">
+                <h3 class="history-body-title __to-animate anim-delay-0-3">Становление клуба</h3>
+                <div class="history-body-content __to-animate anim-delay-0-3">
+                  <p>Президент федерации Вин Чун Урала М. Бурдин возложил на плечи нынешнего тренера Владимира Медведева обязаности главного инструктора федерации.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          {{-- End history item --}}
+
+        </div>
+      </div>
+    </div>
+    {{-- End history items --}}
   </div>
 </div>
+{{-- End about clube --}}
 
 <script src="/bower_components/jquery/dist/jquery.min.js"></script>
 <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="/bower_components/owl.carousel/dist/owl.carousel.min.js"></script>
+<script src="/bower_components/waypoints/lib/jquery.waypoints.min.js"></script>
 <script src="/js/app.js"></script>
 </body>
 </html>

@@ -35,8 +35,52 @@ var owlCrouselFeatureSlide = function() {
 /** End Carousel Feature Slide **/
 
 /** Start navigation **/
-var navigationSection = function() {
+var $navbar = $('#navbar > ul');
+var clickMenu = function() {
+  $('a:not([class="external"])').click(function(event) {
+    var section = $(this).data('nav-section') || 'slider';
 
+    $('html, body').animate({
+      scrollTop: $('[data-section="'+section+'"]').offset().top
+    }, 500);
+
+    if ($navbar.is(':visible')) {
+      $navbar.removeClass('in');
+      $navbar.attr('aria-expanded', 'false');
+    }
+
+    event.preventDefault();
+    return false;
+  });
+};
+
+var navActive = function(section) {
+  $navbar.find('li').removeClass('active');
+  $navbar.each(function() {
+    $(this).find('a[data-nav-section="'+section+'"]').closest('li').addClass('active');
+  });
+};
+
+var navigationSection = function() {
+  var $section = $('div[data-section]');
+
+  $section.waypoint(function(direction) {
+    if (direction === 'down') {
+      navActive($(this.element).data('section'));
+    }
+  }, {
+    offset: '150px'
+  });
+
+  $section.waypoint(function(direction) {
+    if (direction === 'up') {
+      navActive($(this.element).data('section'));
+    }
+  }, {
+    offset: function() {
+      return -$(this.element).height() + 135;
+    }
+  });
 };
 /** End navigation **/
 
@@ -67,3 +111,17 @@ var windowScroll = function() {
 // === Running
 owlCrouselFeatureSlide();
 windowScroll();
+clickMenu();
+navigationSection();
+
+$('.history-item').waypoint({
+  handler: function() {
+    var $el = $(this.element);
+    $el.find('.history-caption').addClass('animated fadeInLeft');
+    $el.find('.history-badge-circle').addClass('animated bounceIn');
+    $el.find('.history-badge-icon').addClass('animated rotateInDownLeft');
+    $el.find('.history-body-title').addClass('animated fadeInDown');
+    $el.find('.history-body-content').addClass('animated fadeInUp');
+  },
+  offset: '80%'
+});
