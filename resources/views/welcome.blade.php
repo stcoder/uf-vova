@@ -28,7 +28,7 @@
       <div id="navbar" class="collapse navbar-collapse">
         <ul class="nav navbar-nav navbar-right">
           <li><a href="/about-clube.html" data-nav-section="about-clube"><span>О клубе</span></a></li>
-          <li><a href="#"><span>Расписание и стоимость</span></a></li>
+          <li><a href="#" data-nav-section="price"><span>Расписание и стоимость</span></a></li>
           <li><a href="#"><span>Лента событий</span></a></li>
           <li><a href="#"><span>Медиа</span></a></li>
           <li><a href="#"><span>Контакты</span></a></li>
@@ -237,6 +237,135 @@
   </div>
 </div>
 {{-- End about clube --}}
+
+{{-- Start price --}}
+<div id="price" data-section="price">
+  <div class="container">
+    {{-- Start price header --}}
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="history">
+          <div class="section-header">
+            <h2 class="section-header-title text-center">Расписание и стоимость</h2>
+            <h3 class="section-header-title-sub text-center">первая тренировка <strong>бесплатно!</strong></h3>
+            <div class="section-header-divider">
+              <span class="section-header-divider-left"></span>
+              <i class="section-header-divider-icon glyphicon glyphicon-star"></i>
+              <span class="section-header-divider-right"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {{-- End price header --}}
+
+    {{-- Start items --}}
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="price">
+          <div class="price-header">Разовое занятие</div>
+          <div class="price-content">
+            <div class="price-cost">
+              400&nbsp;<small>руб.</small>
+              <div class="price-cost-desc">для мужчин и женщин</div>
+            </div>
+            <div class="price-separator"></div>
+            <div class="price-body">
+              <p>Длительность тренировки: 2 часа</p>
+              <p>Возраст: от 18 лет</p>
+              <p>Занятия проходят каждый <strong>вторник</strong>, <strong>пятницу</strong> и <strong>воскрсенье</strong> в <u>20:00</u>.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="price">
+          <div class="price-header">Старшая группа</div>
+          <div class="price-content">
+            <div class="price-body">
+              <p class="price-body-title">Четыре занятия:</p>
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="price-cost">
+                      1600&nbsp;<small>руб.</small>
+                      <div class="price-cost-desc">для мужчин</div>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="price-cost">
+                      1400&nbsp;<small>руб.</small>
+                      <div class="price-cost-desc">для женщин</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="price-separator"></div>
+              <div class="price-body-title">Восемь занятий:</div>
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="price-cost">
+                      1900&nbsp;<small>руб.</small>
+                      <div class="price-cost-desc">для мужчин</div>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="price-cost">
+                      1600&nbsp;<small>руб.</small>
+                      <div class="price-cost-desc">для женщин</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="price-separator"></div>
+              <div class="price-body-title">Двенадцать занятий:</div>
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="price-cost">
+                      2400&nbsp;<small>руб.</small>
+                      <div class="price-cost-desc">для мужчин</div>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="price-cost">
+                      2100&nbsp;<small>руб.</small>
+                      <div class="price-cost-desc">для женщин</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="price-separator"></div>
+              <p>Длительность тренировки: 2 часа</p>
+              <p>Возраст: от 18 лет</p>
+              <p>Занятия проходят каждый <strong>вторник</strong>, <strong>пятницу</strong> и <strong>воскрсенье</strong> в <u>20:00</u>.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="price">
+          <div class="price-header">Детская группа</div>
+          <div class="price-content">
+            <div class="price-cost">
+              1800&nbsp;<small>руб.</small>
+              <div class="price-cost-desc">абонемент на 12 занятий</div>
+            </div>
+            <div class="price-separator"></div>
+            <div class="price-body">
+              <p>Длительность тренировки: 1 час 30 минут</p>
+              <p>Возраст: от 7 до 13 лет</p>
+              <p>Занятия проходят каждый <strong>вторник</strong>, <strong>пятницу</strong> и <strong>воскрсенье</strong> в <u>18:30</u>.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {{-- End items --}}
+  </div>
+</div>
+{{-- End price --}}
 
 <script src="/bower_components/jquery/dist/jquery.min.js"></script>
 <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
