@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/', 'WelcomeController@index');
+Route::get('/', 'HomeController@index');
 
 Route::get('home', 'HomeController@index');
 
@@ -25,3 +25,18 @@ Route::controllers([
 ]);
 
 Route::get('{page}.html', ['as' => 'page', 'uses' => '\App\Http\Controllers\PageController@showPage']);
+
+Route::get('show_attachment', [
+	'as' => 'attachment_show',
+	'uses' => 'AttachmentController@show'
+]);
+
+Route::get('get_audio{id}', [
+	'as' => 'audio_get',
+	'uses' => 'AttachmentController@getAudio'
+]);
+
+Route::get('load_next_posts', [
+	'as' => 'load_next_posts',
+	'uses' => 'HomeController@loadNextPosts'
+]);

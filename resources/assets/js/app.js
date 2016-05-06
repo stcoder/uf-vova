@@ -37,7 +37,7 @@ var owlCrouselFeatureSlide = function() {
 /** Start navigation **/
 var $navbar = $('#navbar > ul');
 var clickMenu = function() {
-  $('a:not([class="external"])').click(function(event) {
+  $('a.nav-control').click(function(event) {
     var section = $(this).data('nav-section') || 'slider';
 
     $('html, body').animate({
@@ -125,3 +125,129 @@ $('.history-item').waypoint({
   },
   offset: '80%'
 });
+
+/** Start player **/
+var activeSong = null;
+function play(el, id) {
+
+  var $player = $(el).parents('.player');
+  var $play = $(el);
+  var $pause = $player.find('.player-btn-pause');
+
+  $play.hide();
+  $pause.show();
+
+  $pause.click(function(e) {
+    e.preventDefault();
+
+    $pause.hide();
+    $play.show();
+  });
+
+  return false;
+}
+
+window.play = play;
+/** End player **/
+
+/** Start load next items **/
+function loadNextItems() {
+  var $items = $('.action-next-loader');
+
+  $items.find('button').on('click', function(e) {
+    var $el = $(this);
+    var $btn = $el.button('loading');
+    var url = $el.data('url');
+    var isLast = false;
+
+    var xhr = $.get(url);
+    xhr.success(function(res) {
+      switch(res.type) {
+        case 'posts':
+            postsController(res);
+        break;
+      }
+
+      url = res.next_url || null;
+
+      if (!url) {
+        isLast = true;
+      }
+    }).error(function() {
+      console.log(arguments);
+    }).always(function() {
+      if (isLast) {
+        $btn.off('click');
+        $btn.remove();
+        return;
+      }
+      $el.data('url', url);
+      $btn.button('reset');
+    });
+  });
+}
+
+function postsController(res) {
+  var $posts = $('#posts');
+  if (res.items) {
+    $.each(res.items, function(col, item) {
+      $posts.find('.--' + col).append(item);
+    });
+  }
+}
+loadNextItems();
+/** End load next items **/
+
+/** Start show attachment modal **/
+var $posts = $('#posts');
+var $modal = $("#modal");
+var isShown = false;
+var $modal_body = $modal.find('.modal-body');
+var attachmentXhr = null;
+
+$modal.on('shown.bs.modal', function() {
+  isShown = true;
+});
+
+$modal.on('hide.bs.modal', function(e) {
+  $modal_body.html('');
+  window.history.pushState(null, '', '/');
+  isShown = false;
+});
+
+function showAttachment(el) {
+  var $el = $(el);
+  window.history.pushState({href: $el.attr('href')}, '', $el.attr('href'));
+  openModal($el.attr('href'));
+  return false;
+}
+window.showAttachment = showAttachment;
+window.onpopstate = function(popstate) {
+  if (popstate.state == null || $.isEmptyObject(popstate.state)) {
+    if (isShown)
+      $modal.modal('hide');
+  } else {
+    openModal(popstate.state.href);
+  }
+};
+
+function openModal(href) {
+  $modal_body.html('<p>Загружаю...</p>');
+  $modal.modal('show');
+
+  if (attachmentXhr) {
+    attachmentXhr.abort();
+  }
+
+  attachmentXhr = $.get('/show_attachment' + href);
+  attachmentXhr.success(function(html) {
+    if (html) {
+      $modal_body.html(html);
+      $modal_body.find('.carousel').carousel();
+    }
+  }).error(function(err, type, message) {
+    $modal_body.html(message);
+  }).always(function() {
+  });
+}
+/** End show attachment modal **/

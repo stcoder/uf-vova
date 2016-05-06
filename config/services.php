@@ -34,4 +34,10 @@ return [
 		'secret' => '',
 	],
 
+	'vkontakte' => [
+		'client_id' => '3258234',
+		'client_secret' => 'A1M8VXTa858MCNyhLBwb',
+		'redirect' => 'http://uf-vova/admin/integration/vkontakte/callback'
+	]
+
 ];

@@ -27,11 +27,11 @@
       </div>
       <div id="navbar" class="collapse navbar-collapse">
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="/about-clube.html" data-nav-section="about-clube"><span>О клубе</span></a></li>
-          <li><a href="#" data-nav-section="price"><span>Расписание и стоимость</span></a></li>
-          <li><a href="#"><span>Лента событий</span></a></li>
-          <li><a href="#"><span>Медиа</span></a></li>
-          <li><a href="#"><span>Контакты</span></a></li>
+          <li><a class="nav-control" href="/about-clube.html" data-nav-section="about-clube"><span>О клубе</span></a></li>
+          <li><a class="nav-control" href="#" data-nav-section="price"><span>Расписание и стоимость</span></a></li>
+          <li><a class="nav-control" href="#"><span>Лента событий</span></a></li>
+          <li><a class="nav-control" href="#"><span>Медиа</span></a></li>
+          <li><a class="nav-control" href="#"><span>Контакты</span></a></li>
         </ul>
       </div>
     </nav>
@@ -260,7 +260,7 @@
     {{-- End price header --}}
 
     {{-- Start items --}}
-    <div class="row">
+    <div class="row price-wrappers">
       <div class="col-sm-4">
         <div class="price">
           <div class="price-header">Разовое занятие</div>
@@ -367,9 +367,85 @@
 </div>
 {{-- End price --}}
 
+{{-- Start posts --}}
+<div id="posts" data-section="posts" style="background-color: #44465B; background-image: url('http://subtlepatterns2015.subtlepatterns.netdna-cdn.com/patterns/ravenna.png'); background-attachment: fixed;">
+  <div class="container">
+    {{-- Start post header --}}
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="history">
+          <div class="section-header">
+            <h2 class="section-header-title text-center">Лента событий</h2>
+            <h3 class="section-header-title-sub text-center">наши последние записи</h3>
+            <div class="section-header-divider">
+              <span class="section-header-divider-left"></span>
+              <i class="section-header-divider-icon glyphicon glyphicon-star"></i>
+              <span class="section-header-divider-right"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {{-- End post header --}}
+
+    {{-- Start items --}}
+    <div class="row">
+      <div class="col-sm-4 --col-1">
+        @foreach($posts as $key => $post)
+          @if($key === 0 || $key === 3)
+            @include('post.item', ['post' => $post])
+          @endif
+        @endforeach
+      </div>
+      <div class="col-sm-4 --col-2">
+        @foreach($posts as $key => $post)
+          @if($key === 1 || $key === 4)
+            @include('post.item', ['post' => $post])
+          @endif
+        @endforeach
+      </div>
+      <div class="col-sm-4 --col-3">
+        @foreach($posts as $key => $post)
+          @if($key === 2 || $key === 5)
+            @include('post.item', ['post' => $post])
+          @endif
+        @endforeach
+      </div>
+      @if($next_posts)
+      <div class="col-sm-12">
+        <div class="action-next-loader">
+          <button type="button" id="load_next_posts" data-url="{{$next_posts}}" data-loading-text="Загружаю..." class="btn btn-primary" autocomplete="off">
+            Показать еще
+          </button>
+        </div>
+      </div>
+      @endif
+    </div>
+    {{-- End items --}}
+  </div>
+</div>
+{{-- End posts --}}
+
+{{-- Start modal --}}
+<div id="modal" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title"></h4>
+      </div>
+      <div class="modal-body"></div>
+    </div>
+  </div>
+</div>
+{{-- End modal --}}
+
 <script src="/bower_components/jquery/dist/jquery.min.js"></script>
 <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="/bower_components/owl.carousel/dist/owl.carousel.min.js"></script>
+<script src="/bower_components/waypoints/lib/jquery.waypoints.min.js"></script>
+<script src="/uppod/uppod.js"></script>
+<script src="/uppod/audio.js"></script>
 <script src="/bower_components/waypoints/lib/jquery.waypoints.min.js"></script>
 <script src="/js/app.js"></script>
 </body>

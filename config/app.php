@@ -39,7 +39,7 @@ return [
 	|
 	*/
 
-	'timezone' => 'UTC',
+	'timezone' => 'Asia/Yekaterinburg',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -154,6 +154,7 @@ return [
 		'Illuminate\Html\HtmlServiceProvider',
 		'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
 		'Intervention\Image\ImageServiceProvider',
+		'SocialiteProviders\Manager\ServiceProvider'
 
 	],
 
@@ -219,6 +220,7 @@ return [
 		'Shortcode' => 'Pingpong\Shortcode\ShortcodeFacade',
 		'Widget' => 'Pingpong\Widget\WidgetFacade',
 		'Image' => 'Intervention\Image\Facades\Image',
+		'Socialite' => 'Laravel\Socialite\Facades\Socialite'
 
 	],
 

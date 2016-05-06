@@ -3,6 +3,7 @@
 
 /** Start variables **/
 @brand-primary: #6173f4;
+@progress-bar-info-bg: @brand-primary;
 @border-radius-base: 0;
 @border-radius-large: 0;
 @border-radius-small: 0;
@@ -10,6 +11,10 @@
 @font-size-base: 16px;
 @icon-font-path: '/bower_components/bootstrap/dist/fonts/';
 /** End variables **/
+
+.action-next-loader:extend(.text-center) {
+  margin: 20px 0;
+}
 
 /** Start helpers **/
 .anim {
@@ -618,6 +623,10 @@
 .price {
   background: #44465B;
 
+  &-wrappers {
+    padding-bottom: 120px;
+  }
+
   &-header {
     background: #fa2d65;
     color: #fff;
@@ -678,3 +687,150 @@
   }
 }
 /** End price **/
+
+/** Start post **/
+.post {
+  background: #fff;
+  margin-bottom: 10px;
+  -webkit-box-shadow: 0 0 5px 1px rgba(0, 0, 0, .1);
+  -moz-box-shadow: 0 0 5px 1px rgba(0, 0, 0, .1);
+  box-shadow: 0 0 5px 1px rgba(0, 0, 0, .1);
+
+  &-date {
+    font-size: 11px;
+    color: rgba(0, 0, 0, .5);
+    padding: 18px 18px 3px;
+    text-align: left;
+  }
+
+  &-text {
+    color: #000;
+    padding: 0 18px 20px;
+    font-size: 14px;
+  }
+
+  &-media:extend(.container-fluid) {
+    &-attachments {
+      .make-row();
+      padding: 0 18px 18px 18px;
+
+      &-content {
+        text-align: justify;
+        font-size: 0;
+
+        &:after {
+          content: '';
+          display: inline-block;
+          width: 100%;
+        }
+      }
+
+      &.c2 {
+        .post-attachment {
+          &.n0,
+          &.n1 {
+            width: 49%;
+            height: 105px;
+          }
+        }
+      }
+
+      &.c5 {
+        .post-attachment {
+          &.n1,
+          &.n2,
+          &.n3,
+          &.n4 {
+            width: 49%;
+            height: 105px;
+          }
+        }
+      }
+    }
+  }
+
+  &-attachment {
+    margin-bottom: 5px;
+    display: inline-block;
+    width: 32%;
+    height: 70px;
+    overflow: hidden;
+
+    &.n0 {
+      width: 100%;
+      height: auto;
+    }
+
+    &-album {
+      text-align: justify;
+      font-size: 0;
+
+      &:after {
+        content: '';
+        display: inline-block;
+        width: 100%;
+      }
+
+      &-control {
+        margin-bottom: 5px;
+        display: inline-block;
+        width: 32%;
+        overflow: hidden;
+
+        &.n0,
+        &.n1 {
+          width: 49%;
+          height: 105px;
+        }
+      }
+
+      &-photo {
+        width: 100%;
+        height: auto;
+      }
+    }
+
+    &-audio {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+  }
+}
+/** End post **/
+
+/** Start player **/
+.player {
+  width: 100%;
+
+  &-actions {
+    float: left;
+  }
+
+  &-controls {
+    clear: both;
+    display: block;
+  }
+
+  &-title {
+    font-size: 13px;
+    line-height: 25px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 265px;
+    float: left;
+  }
+
+  &-duration:extend(.text-muted) {
+    float: right;
+    line-height: 25px;
+    font-size: 11px;
+  }
+
+  .progress {
+    height: 3px;
+    margin-bottom: 0;
+  }
+}
+/** End player **/

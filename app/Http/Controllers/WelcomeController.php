@@ -1,5 +1,7 @@
 <?php namespace App\Http\Controllers;
 
+use App\Post;
+
 class WelcomeController extends Controller {
 
 	/*
@@ -30,7 +32,8 @@ class WelcomeController extends Controller {
 	 */
 	public function index()
 	{
-		return view('welcome');
+		$data = ['posts' => Post::where('deleted_at', '=', null)->orderBy('date', 'DESC')->paginate(6)];
+		return view('welcome', $data);
 	}
 
 }

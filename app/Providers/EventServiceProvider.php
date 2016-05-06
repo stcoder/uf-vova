@@ -14,6 +14,10 @@ class EventServiceProvider extends ServiceProvider {
 		'event.name' => [
 			'EventListener',
 		],
+		'SocialiteProviders\Manager\SocialiteWasCalled' => [
+			// add your listeners (aka providers) here
+			'SocialiteProviders\VKontakte\VKontakteExtendSocialite@handle',
+		]
 	];
 
 	/**
