@@ -1,7 +1,7 @@
 <?php namespace App\Integration\Services;
 
 use GuzzleHttp\Client;
-use GuzzleHttp\Message\Request;
+use GuzzleHttp\Psr7\Request;
 use Exception;
 
 class Vk {
