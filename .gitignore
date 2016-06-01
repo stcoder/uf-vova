@@ -6,6 +6,6 @@
 /public/packages
 /public/js
 /public/css
-/public/images
+/public/images/uploads
 /public/fonts
 composer.lock

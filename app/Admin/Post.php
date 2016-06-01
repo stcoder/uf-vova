@@ -31,7 +31,7 @@ $model->display(function() {
 
     $display->actions([
         Column::action('post_import')->value('Импортировать записи')->icon('fa-share')->target('_blank')->callback(function ($collection) {
-            \App\Imports\Post::import(68, 15);
+            \App\Imports\Post::import(0, 20);
         })
     ]);
 
