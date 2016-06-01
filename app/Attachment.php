@@ -3,6 +3,33 @@
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * App\Attachment
+ *
+ * @property integer $id
+ * @property string $external_id
+ * @property string $access_key
+ * @property string $type
+ * @property string $title
+ * @property string $description
+ * @property string $srcs
+ * @property \Carbon\Carbon $deleted_at
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Post[] $posts
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Attachment[] $childs
+ * @method static \Illuminate\Database\Query\Builder|\App\Attachment whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Attachment whereExternalId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Attachment whereAccessKey($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Attachment whereType($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Attachment whereTitle($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Attachment whereDescription($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Attachment whereSrcs($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Attachment whereDeletedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Attachment whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Attachment whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
 class Attachment extends Model {
 
     use SoftDeletes;
@@ -47,6 +74,19 @@ class Attachment extends Model {
      */
     public function getSrcsAttribute() {
         return json_decode($this->attributes['srcs'], true);
+    }
+
+    /**
+     * @return Attachment[]|\Illuminate\Database\Eloquent\Collection|null
+     */
+    public function getPhotosByAlbum() {
+        $photos = null;
+
+        if ($this->type === 'album') {
+            $photos = $this->childs;
+        }
+
+        return $photos;
     }
 
 }

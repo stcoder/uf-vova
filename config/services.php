@@ -35,9 +35,9 @@ return [
 	],
 
 	'vkontakte' => [
-		'client_id' => '3258234',
-		'client_secret' => 'A1M8VXTa858MCNyhLBwb',
-		'redirect' => 'http://uf-vova.segacoder.ru/admin/integration/vkontakte/callback'
+		'client_id' => env('VK_APP_ID'),
+		'client_secret' => env('VK_APP_SECRET'),
+		'redirect' => env('VK_APP_REDIRECT')
 	]
 
 ];

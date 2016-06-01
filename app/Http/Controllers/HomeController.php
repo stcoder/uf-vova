@@ -1,55 +1,130 @@
 <?php namespace App\Http\Controllers;
 
+use App\Review;
+use Illuminate\View\View;
 use Request;
 use App\Post;
 
+/**
+ * Class HomeController
+ * @package App\Http\Controllers
+ */
 class HomeController extends Controller {
-
-	/*
-	|--------------------------------------------------------------------------
-	| Home Controller
-	|--------------------------------------------------------------------------
-	|
-	| This controller renders your application's "dashboard" for users that
-	| are authenticated. Of course, you are free to change or remove the
-	| controller as you wish. It is just here to get your app started!
-	|
-	*/
 
 	/**
 	 * Create a new controller instance.
 	 *
 	 * @return void
 	 */
-	public function __construct()
-	{
+	public function __construct() {
 		$this->middleware('guest');
 	}
 
 	/**
-	 * Show the application dashboard to the user.
-	 *
-	 * @return Response
+	 * @return View
 	 */
 	public function index()
 	{
 		$posts = $this->__getPosts();
+		$review = $this->__getReview();
 		$data = [
 			'posts' => $posts,
+			'review' => $review,
 			'next_posts' => $posts->nextPageUrl()
 		];
 
 		return view('welcome', $data);
 	}
 
+	/**
+	 * @return \Illuminate\Contracts\Pagination\Paginator
+	 */
 	protected function __getPosts()
 	{
-		$posts = Post::where('deleted_at', '=', null)->orderBy('date', 'DESC')->simplePaginate(6);
+		$posts = Post::withTrashed()->orderBy('date', 'DESC')->simplePaginate(8);
 		$posts->setPath(route('load_next_posts'));
 
 		return $posts;
 	}
 
+	/**
+	 * Возвращает объект отзыва или пустой результат.
+	 *
+	 * Запоминает в сессии 10 последних отзывов.
+	 * Отзыв выбирается из базы рандомно исключая отзывы из сессии.
+	 *
+	 * @return Review|null
+	 */
+	protected function __getReview()
+	{
+		$review_ids = Request::session()->get('review_ids');
+
+		$where = Review::withTrashed()->with('profile');
+
+		if (!is_null($review_ids)) {
+			$where->whereNotIn('id', $review_ids);
+		}
+
+		$where->orderByRaw('RAND()');
+		$where->limit(1);
+
+		$reviews = $where->get();
+		$review = null;
+
+		if ($reviews) {
+			$review = $reviews[0];
+		}
+
+		if (is_null($review_ids)) {
+			$review_ids = [];
+		}
+
+		if (sizeof($review_ids) >= 30) {
+			$review_ids = array_slice($review_ids, 1);
+		}
+
+		if (sizeof($review_ids) < 30) {
+			array_push($review_ids, $review->id);
+		}
+
+		Request::session()->set('review_ids', $review_ids);
+
+		return $review;
+	}
+
+	/**
+	 * Method Action
+	 *
+	 * @return \Response
+	 */
+	public function loadReview()
+	{
+		if (!Request::ajax()) {
+			abort(404);
+		}
+
+		$review = $this->__getReview();
+		$response_data = ['no' => true];
+
+		if (!is_null($review)) {
+			$response_data = [
+				'text_small' => str_limit($review->text, 400),
+				'text_full' => $review->text,
+				'text_isBig' => strlen($review->text) > 400,
+				'profile_name' => $review->profile->first_name . ' ' . $review->profile->last_name,
+				'profile_domain' => $review->profile->domain,
+				'profile_photo' => $review->profile->photo
+			];
+		}
+
+		return response()->json($response_data);
+	}
+
+	/**
+	 * Method Action
+	 *
+	 * @return \Response
+	 */
 	public function loadNextPosts()
 	{
 		if (!Request::ajax()) {
@@ -57,28 +132,9 @@ class HomeController extends Controller {
 		}
 
 		$posts = $this->__getPosts();
-		$items = [
-			'col-1' => [],
-			'col-2' => [],
-			'col-3' => []
-		];
+		$items = [];
 		foreach($posts as $key => $post) {
-			$n = null;
-			switch($key) {
-				case 0:
-				case 3:
-					$n = 1;
-					break;
-				case 1:
-				case 4:
-					$n = 2;
-					break;
-				case 2:
-				case 5:
-					$n = 3;
-					break;
-			}
-			$items['col-' . $n][] = view('post.item', ['post' => $post])->render();
+			$items[] = view('post.item', ['post' => $post])->render();
 		}
 
 		return response()->json(['items' => $items, 'type' => 'posts', 'next_url' => $posts->nextPageUrl()]);

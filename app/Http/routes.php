@@ -11,7 +11,10 @@
 |
 */
 
-Route::get('/', 'HomeController@index');
+Route::get('/', [
+	'as' => 'home',
+	'uses' => 'HomeController@index'
+]);
 
 Route::get('home', 'HomeController@index');
 
@@ -31,12 +34,32 @@ Route::get('show_attachment', [
 	'uses' => 'AttachmentController@show'
 ]);
 
+Route::get('post-show_pid{pid}', [
+	'as' => 'post_show',
+	'uses' => 'PostController@show'
+]);
+
 Route::get('get_audio{id}', [
 	'as' => 'audio_get',
 	'uses' => 'AttachmentController@getAudio'
 ]);
 
+Route::get('load-video-vid{vid}', [
+	'as' => 'load_video',
+	'uses' => 'AttachmentController@loadVideo'
+]);
+
+Route::get('load-audio-aid{aid}', [
+	'as' => 'load_audio',
+	'uses' => 'AttachmentController@loadAudio'
+]);
+
 Route::get('load_next_posts', [
 	'as' => 'load_next_posts',
 	'uses' => 'HomeController@loadNextPosts'
+]);
+
+Route::get('load_review', [
+	'as' => 'load_review',
+	'uses' => 'HomeController@loadReview'
 ]);

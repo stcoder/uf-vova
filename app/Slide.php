@@ -19,6 +19,16 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  * @property \Carbon\Carbon $updated_at
  * @property-read \App\Page $page
  * @method static \Illuminate\Database\Query\Builder|\App\Slide orderModel()
+ * @method static \Illuminate\Database\Query\Builder|\App\Slide whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Slide wherePageId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Slide whereTitle($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Slide whereDescription($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Slide whereImage($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Slide whereSort($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Slide whereDeletedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Slide whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Slide whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
 class Slide extends Model
 {

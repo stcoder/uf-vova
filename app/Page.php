@@ -21,6 +21,18 @@ use Cviebrock\EloquentSluggable\SluggableTrait;
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @method static \Illuminate\Database\Query\Builder|\App\Page whereSlug($slug)
+ * @method static \Illuminate\Database\Query\Builder|\App\Page whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Page whereTitle($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Page whereContent($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Page whereMetaKeywords($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Page whereMetaDescription($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Page whereMetaOthers($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Page wherePublished($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Page wherePublishedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Page whereDeletedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Page whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Page whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
 class Page extends Model implements SluggableInterface
 {

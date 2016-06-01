@@ -220,7 +220,8 @@ return [
 		'Shortcode' => 'Pingpong\Shortcode\ShortcodeFacade',
 		'Widget' => 'Pingpong\Widget\WidgetFacade',
 		'Image' => 'Intervention\Image\Facades\Image',
-		'Socialite' => 'Laravel\Socialite\Facades\Socialite'
+		'Socialite' => 'Laravel\Socialite\Facades\Socialite',
+		'Str' => Illuminate\Support\Str::class
 
 	],
 

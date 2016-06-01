@@ -37,24 +37,14 @@ class Imports extends Controller
     }
 
     public function postsImport() {
-        $response = Vk::call('wall.get', [
-            'owner_id' => '-' . Option::get('vk-group-id'),
-            'offset' => 0,
-            'count' => 20,
-            'filter' => 'owner',
-            'extended' => 0
-        ]);
+        $start = Carbon::now();
+        $stats = \App\Imports\Post::import(620, 5);
+        $stop = Carbon::now();
 
-        $posts = [];
+        $stats['time'] = $start->diffForHumans($stop, true);
 
-        foreach($response['response'] as $respond) {
-            if (!is_array($respond)) continue;
-            if (isset($respond['is_pinned']) && $respond['is_pinned'] == 1) continue;
-            array_push($posts, $respond);
-        }
-
-        $normalize_posts = array_map([$this, '__normalizePosts'], $posts);
-        dd($normalize_posts);
+        $content = view('admin.integration.imports.posts-success', $stats)->render();
+        return Admin::view($content, 'Импорт завершен');
     }
 
     /**

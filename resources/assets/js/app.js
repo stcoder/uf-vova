@@ -1,3 +1,11 @@
+var $modal = $("#modal");
+var $navbar = $('#navbar > ul');
+var $posts = $('#posts');
+
+$modal.on('hidden.bs.modal', function() {
+  $modal.find('.modal-body').html('');
+});
+
 /** Start Carousel Feature Slide **/
 var owlCrouselFeatureSlide = function() {
 
@@ -35,14 +43,11 @@ var owlCrouselFeatureSlide = function() {
 /** End Carousel Feature Slide **/
 
 /** Start navigation **/
-var $navbar = $('#navbar > ul');
 var clickMenu = function() {
   $('a.nav-control').click(function(event) {
     var section = $(this).data('nav-section') || 'slider';
 
-    $('html, body').animate({
-      scrollTop: $('[data-section="'+section+'"]').offset().top
-    }, 500);
+    scrollTo(section);
 
     if ($navbar.is(':visible')) {
       $navbar.removeClass('in');
@@ -52,6 +57,12 @@ var clickMenu = function() {
     event.preventDefault();
     return false;
   });
+};
+
+var scrollTo = function(section) {
+  $('html, body').animate({
+    scrollTop: $('[data-section="'+section+'"]').offset().top
+  }, 500);
 };
 
 var navActive = function(section) {
@@ -152,7 +163,7 @@ window.play = play;
 
 /** Start load next items **/
 function loadNextItems() {
-  var $items = $('.action-next-loader');
+  var $items = $('.action-next-loader.loader-posts');
 
   $items.find('button').on('click', function(e) {
     var $el = $(this);
@@ -188,66 +199,298 @@ function loadNextItems() {
 }
 
 function postsController(res) {
-  var $posts = $('#posts');
+  var $posts = $('#posts .posts-container');
   if (res.items) {
     $.each(res.items, function(col, item) {
-      $posts.find('.--' + col).append(item);
+      var $col = $('<div/>', {class: 'col-lg-3 col-md-4 col-sm-6'});
+      $col.append(item);
+      $posts.append($col);
     });
   }
 }
 loadNextItems();
 /** End load next items **/
 
-/** Start show attachment modal **/
-var $posts = $('#posts');
-var $modal = $("#modal");
-var isShown = false;
-var $modal_body = $modal.find('.modal-body');
-var attachmentXhr = null;
+/** Start review **/
+window.review = new Review();
+function Review() {
+  var $section = $('#reviews');
+  var $text = $section.find('.review-text');
+  var $textSmall = $text.find('.review-text-small');
+  var $textFull = $text.find('.review-text-full');
+  var $linkMore = $text.find('.review-text-link a');
+  var $nextReview = $section.find('#load_next_reviews');
+  var $profileImage = $section.find('.review-profile-image');
+  var $profileLink = $section.find('.review-profile-link');
 
-$modal.on('shown.bs.modal', function() {
-  isShown = true;
-});
-
-$modal.on('hide.bs.modal', function(e) {
-  $modal_body.html('');
-  window.history.pushState(null, '', '/');
-  isShown = false;
-});
-
-function showAttachment(el) {
-  var $el = $(el);
-  window.history.pushState({href: $el.attr('href')}, '', $el.attr('href'));
-  openModal($el.attr('href'));
-  return false;
-}
-window.showAttachment = showAttachment;
-window.onpopstate = function(popstate) {
-  if (popstate.state == null || $.isEmptyObject(popstate.state)) {
-    if (isShown)
-      $modal.modal('hide');
-  } else {
-    openModal(popstate.state.href);
-  }
-};
-
-function openModal(href) {
-  $modal_body.html('<p>Загружаю...</p>');
-  $modal.modal('show');
-
-  if (attachmentXhr) {
-    attachmentXhr.abort();
+  if ($linkMore.length > 0) {
+    $linkMore.on('click', function(e) {
+      e.preventDefault();
+      $text.addClass('review-text__show-full');
+    }.bind(this));
   }
 
-  attachmentXhr = $.get('/show_attachment' + href);
-  attachmentXhr.success(function(html) {
-    if (html) {
-      $modal_body.html(html);
-      $modal_body.find('.carousel').carousel();
-    }
-  }).error(function(err, type, message) {
-    $modal_body.html(message);
-  }).always(function() {
+  $nextReview.on('click', function(e) {
+    e.preventDefault();
+    var $el = $(e.target);
+    var $btn = $el.button('loading');
+    var url = $el.data('url');
+
+    var xhr = $.get(url);
+    xhr.success(function(res) {
+      if (res.no && res.no == true) {
+        $btn.hide();
+        return;
+      }
+      $textSmall.html(res.text_small);
+
+      if (res.text_isBig) {
+        $linkMore.show();
+        $textFull.html(res.text_full);
+      } else {
+        $linkMore.hide();
+      }
+      $profileImage.prop('src', res.profile_photo);
+      $profileLink.prop('href', 'http://vk.com/' + res.profile_domain);
+      $profileLink.html(res.profile_name);
+      scrollTo('reviews');
+    }).error(function() {
+      console.log(arguments);
+    }).always(function() {
+      $text.removeClass('review-text__show-full');
+      $btn.button('reset');
+    }.bind(this));
   });
 }
-/** End show attachment modal **/
+/** End review **/
+
+/** Start show video **/
+var $videoLinks = $('.video-player-playlist-item-link');
+$videoLinks.on('click', function(e) {
+  e.preventDefault();
+  var parent_class = 'video-player-playlist-item';
+  var parent_class_active = parent_class + '-active';
+  var $target = $(this);
+  var $parent = $target.parent('.' + parent_class);
+  var hasActive = $parent.data('active') || false;
+
+  if (hasActive) {
+    return;
+  }
+
+  $parent.addClass(parent_class_active);
+  $parent.data('active', true);
+  var url = $target.prop('href');
+
+  var xhr = $.get(url);
+  xhr.success(function(res) {
+    $modal.find('.modal-title').html(res.title);
+    var $iframe = $(['<div class="embed-responsive embed-responsive-16by9">',
+        '<iframe class="embed-responsive-item" src="'+res.player+'"></iframe></div>'].join(''));
+    $modal.find('.modal-body').append($iframe).append($('<p>'+res.description+'</p>'));
+  }).error(function() {
+    $modal.find('.modal-title').html('Ошибка');
+    $modal.find('.modal-body').append($('<p/>').html('Во время загрузки видео возникли ошибки.'));
+  }).always(function() {
+    $modal.modal('show');
+    $parent.data('active', false);
+    $parent.removeClass(parent_class_active);
+  });
+});
+/** End show video **/
+
+/** Start audio player **/
+function AudioPlayer($element) {
+  this.$el = $element;
+  this.$currentItem = null;
+  this.$currentBar = null;
+  this.$currentDuration = null;
+  this.$items = null;
+  this.audio = null;
+  this.setIntId = null;
+  this.state = 'wait';
+  this.classes = {
+    'item': 'audio-player-item',
+    'state': {
+      'loading': 'audio-player--loading',
+      'playing': 'audio-player--playing',
+      'paused': 'audio-player--paused'
+    },
+    'controls': {
+      'play': 'audio-player-action-play-control',
+      'pause': 'audio-player-action-pause-control'
+    },
+    'info': {
+      'duration': 'audio-player-info-time-duration'
+    }
+  };
+
+  this.init();
+}
+
+AudioPlayer.prototype.init = function() {
+  this.$items = this.$el.find('.' + this.classes.item);
+  this.$el.on('click', '.' + this.classes.controls.play, this.onPlay());
+  this.$el.on('click', '.' + this.classes.controls.pause, this.onPause());
+};
+AudioPlayer.prototype.play = function() {
+  var src = this.$currentItem.data('src');
+
+  if (!src) {
+    return;
+  }
+
+  this.$currentItem.addClass(this.classes.state.playing);
+  if (this.state != 'pause')
+    this.audio = new Audio(src);
+  this.audio.play();
+  this.state = 'play';
+  if (!this.setIntId) this.setIntId = setInterval(this.startPlayProgress.bind(this), 1000);
+};
+AudioPlayer.prototype.pause = function() {
+  if (!this.audio) {
+    return;
+  }
+
+  this.audio.pause();
+  this.state = 'pause';
+  this.$currentItem
+      .removeClass(this.classes.state.playing)
+      .addClass(this.classes.state.paused);
+  this.pausePlayProgress();
+};
+AudioPlayer.prototype.stop = function() {
+  if (this.$currentItem) {
+    this.$currentItem.removeClass(this.classes.state.playing);
+    this.$currentItem.removeClass(this.classes.state.paused);
+  }
+  this.stopPlayProgress();
+  this.$currentItem = null;
+  this.$currentBar = null;
+  this.$currentDuration = null;
+
+  if (this.audio) {
+    this.audio.pause();
+  }
+  this.audio = null;
+  this.state = 'stop';
+};
+AudioPlayer.prototype.next = function() {
+  var $next = this.$currentItem.next();
+
+  if ($next.length > 0) {
+    $next.find('.' + this.classes.controls.play).trigger('click');
+    return;
+  }
+
+  this.stop();
+};
+AudioPlayer.prototype.prev = function() {};
+AudioPlayer.prototype.loading = function(auto_play) {
+  auto_play || (auto_play = false);
+  var url = this.$currentItem.data('url');
+  if (!url) {
+    return null;
+  }
+
+  var xhr = $.get(url);
+  xhr.success(function(res) {
+    this.$currentItem.data('loaded', true);
+    this.$currentItem.data('src', res.url);
+    this.$currentItem.removeClass(this.classes.state.loading);
+    if (auto_play) {
+      this.play();
+    }
+  }.bind(this)).error(function(err) {
+    this.$currentItem.data('loaded', false);
+    this.$currentItem.data('src', null);
+  }.bind(this));
+};
+AudioPlayer.prototype.hasLoaded = function() {
+  return this.$currentItem.data('loaded') || false;
+};
+AudioPlayer.prototype.onPlay = function() {
+  var self = this;
+  return function(e) {
+    e.preventDefault();
+    if (self.$currentItem) {
+      var $prevItem = self.$currentItem;
+    }
+
+    var $currentItem = $(this).parents('.' + self.classes.item);
+
+    if ($prevItem && $prevItem.get(0) != $currentItem.get(0)) {
+      self.stop();
+    }
+    self.$currentItem = $currentItem;
+
+    self.$currentBar = self.$currentItem.find('.progress-bar');
+    self.$currentDuration = self.$currentItem.find('.' + self.classes.info.duration);
+
+    if (!self.hasLoaded()) {
+      self.$currentItem.addClass(self.classes.state.loading);
+      self.loading(true);
+      return;
+    }
+
+    if (self.$currentItem.hasClass(self.classes.state.paused)) {
+      self.$currentItem.removeClass(self.classes.state.paused);
+    }
+    self.play();
+  };
+};
+AudioPlayer.prototype.onPause = function() {
+  var self = this;
+  return function(e) {
+    e.preventDefault();
+    self.pause();
+  };
+};
+AudioPlayer.prototype.formatTime = function(t) {
+  var res, sec, min, hour;
+  t = Math.max(t, 0);
+  sec = t % 60;
+  res = (sec < 10) ? '0'+sec : sec;
+  t = Math.floor(t / 60);
+  min = t % 60;
+  res = min+':'+res;
+  t = Math.floor(t / 60);
+  if (t > 0) {
+    if (min < 10) res = '0' + res;
+    res = t+':'+res;
+  }
+  return res;
+};
+AudioPlayer.prototype.startPlayProgress = function() {
+  var duration = Math.round(this.audio.duration) || 0;
+  var currTime = Math.round(this.audio.currentTime);
+  var per = currTime / duration * 100;
+  per = Math.min(100, Math.max(0, per));
+  this.setTime(duration - currTime);
+  this.$currentBar.css({width: per + '%'});
+
+  if (this.audio.ended) {
+    this.stopPlayProgress();
+    this.next();
+  }
+};
+AudioPlayer.prototype.stopPlayProgress = function() {
+  if (!this.audio) {
+    return;
+  }
+  var duration = Math.round(this.audio.duration) || 0;
+  this.setTime(duration);
+  this.$currentBar.css({width: 0});
+  this.pausePlayProgress();
+};
+AudioPlayer.prototype.pausePlayProgress = function() {
+  clearInterval(this.setIntId);
+  this.setIntId = null;
+};
+AudioPlayer.prototype.setTime = function(len) {
+  var t = this.formatTime(len);
+  this.$currentDuration.html(t);
+};
+
+window.audio_player = new AudioPlayer($('.audio-player'));
+/** End audio player **/

@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.0.35 on 2016-02-15.
+ * Generated for Laravel 5.0.35 on 2016-05-23.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -12485,20 +12485,22 @@ namespace {
          *
          * @param string $name
          * @param mixed $callback
+         * @return void 
          * @static 
          */
         public static function register($name, $callback){
-            return \Pingpong\Shortcode\Shortcode::register($name, $callback);
+            \Pingpong\Shortcode\Shortcode::register($name, $callback);
         }
         
         /**
          * Unregister the specified shortcode by given name.
          *
          * @param string $name
+         * @return void 
          * @static 
          */
         public static function unregister($name){
-            return \Pingpong\Shortcode\Shortcode::unregister($name);
+            \Pingpong\Shortcode\Shortcode::unregister($name);
         }
         
         /**
@@ -12525,7 +12527,7 @@ namespace {
         /**
          * Get count from all shortcodes.
          *
-         * @return int 
+         * @return integer 
          * @static 
          */
         public static function count(){
@@ -12536,7 +12538,7 @@ namespace {
          * Return true is the given name exist in shortcodes array.
          *
          * @param string $name
-         * @return bool 
+         * @return boolean 
          * @static 
          */
         public static function exists($name){
@@ -12548,7 +12550,7 @@ namespace {
          *
          * @param string $content
          * @param string $name
-         * @return bool 
+         * @return boolean 
          * @static 
          */
         public static function contains($content, $name){
@@ -12559,30 +12561,33 @@ namespace {
          * Compile the gived content.
          *
          * @param string $content
+         * @return void 
          * @static 
          */
         public static function compile($content){
-            return \Pingpong\Shortcode\Shortcode::compile($content);
+            \Pingpong\Shortcode\Shortcode::compile($content);
         }
         
         /**
          * Parse the given content.
          *
          * @param string $content
+         * @return void 
          * @static 
          */
         public static function parse($content){
-            return \Pingpong\Shortcode\Shortcode::parse($content);
+            \Pingpong\Shortcode\Shortcode::parse($content);
         }
         
         /**
          * Render the current calld shortcode.
          *
          * @param array $matches
+         * @return void 
          * @static 
          */
         public static function render($matches){
-            return \Pingpong\Shortcode\Shortcode::render($matches);
+            \Pingpong\Shortcode\Shortcode::render($matches);
         }
         
     }
@@ -12731,6 +12736,92 @@ namespace {
          */
         public static function cache($callback, $lifetime = null, $returnObj = false){
             return \Intervention\Image\ImageManager::cache($callback, $lifetime, $returnObj);
+        }
+        
+    }
+
+
+    class Socialite extends \Laravel\Socialite\Facades\Socialite{
+        
+        /**
+         * Get a driver instance.
+         *
+         * @param string $driver
+         * @return mixed 
+         * @static 
+         */
+        public static function with($driver){
+            return \Laravel\Socialite\SocialiteManager::with($driver);
+        }
+        
+        /**
+         * Build an OAuth 2 provider instance.
+         *
+         * @param string $provider
+         * @param array $config
+         * @return \Laravel\Socialite\Two\AbstractProvider 
+         * @static 
+         */
+        public static function buildProvider($provider, $config){
+            return \Laravel\Socialite\SocialiteManager::buildProvider($provider, $config);
+        }
+        
+        /**
+         * Format the server configuration.
+         *
+         * @param array $config
+         * @return array 
+         * @static 
+         */
+        public static function formatConfig($config){
+            return \Laravel\Socialite\SocialiteManager::formatConfig($config);
+        }
+        
+        /**
+         * Get the default driver name.
+         *
+         * @throws \InvalidArgumentException
+         * @return string 
+         * @static 
+         */
+        public static function getDefaultDriver(){
+            return \Laravel\Socialite\SocialiteManager::getDefaultDriver();
+        }
+        
+        /**
+         * Get a driver instance.
+         *
+         * @param string $driver
+         * @return mixed 
+         * @static 
+         */
+        public static function driver($driver = null){
+            //Method inherited from \Illuminate\Support\Manager            
+            return \Laravel\Socialite\SocialiteManager::driver($driver);
+        }
+        
+        /**
+         * Register a custom driver creator Closure.
+         *
+         * @param string $driver
+         * @param \Closure $callback
+         * @return $this 
+         * @static 
+         */
+        public static function extend($driver, $callback){
+            //Method inherited from \Illuminate\Support\Manager            
+            return \Laravel\Socialite\SocialiteManager::extend($driver, $callback);
+        }
+        
+        /**
+         * Get all of the created "drivers".
+         *
+         * @return array 
+         * @static 
+         */
+        public static function getDrivers(){
+            //Method inherited from \Illuminate\Support\Manager            
+            return \Laravel\Socialite\SocialiteManager::getDrivers();
         }
         
     }

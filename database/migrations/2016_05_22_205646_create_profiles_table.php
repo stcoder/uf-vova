@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAttachmentsTable extends Migration {
+class CreateProfilesTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,15 +12,15 @@ class CreateAttachmentsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('attachments', function(Blueprint $table)
+		Schema::create('profiles', function(Blueprint $table)
 		{
 			$table->increments('id');
 			$table->string('external_id')->index();
-			$table->string('access_key')->index();
-			$table->enum('type', ['photo', 'audio', 'video', 'doc', 'album', 'link', 'poll']);
-			$table->string('title');
-			$table->text('description');
-			$table->longText('srcs');
+			$table->string('first_name');
+			$table->string('last_name');
+			$table->string('domain');
+			$table->string('photo');
+			$table->string('photo_big');
 			$table->softDeletes();
 			$table->timestamps();
 		});
@@ -33,7 +33,7 @@ class CreateAttachmentsTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::dropIfExists('attachments');
+		Schema::drop('profiles');
 	}
 
 }

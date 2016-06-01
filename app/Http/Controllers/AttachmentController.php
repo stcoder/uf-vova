@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers;
 
 use App\Attachment;
+use App\Integration\Services\Vk;
 use Request;
 use Input;
 
@@ -53,5 +54,45 @@ class AttachmentController extends Controller {
         }
 
         return view('post.attachments.show', $result);
+    }
+
+    /**
+     * @param $vid
+     * @return \Response
+     * @throws \Exception
+     */
+    public function loadVideo($vid) {
+        $attachment = Attachment::findOrFail($vid);
+
+        $response = Vk::call('video.get', [
+            'videos' => $attachment->external_id
+        ]);
+
+        $video = $response['response'][1];
+
+        return response()->json([
+            'title' => $video['title'],
+            'description' => text_linked($video['description']),
+            'player' => $video['player']
+        ]);
+    }
+
+    /**
+     * @param $aid
+     * @return \Response
+     * @throws \Exception
+     */
+    public function loadAudio($aid) {
+        $attachment = Attachment::findOrFail($aid);
+
+        $response = Vk::call('audio.getById', [
+            'audios' => $attachment->external_id
+        ]);
+
+        $audio = reset($response['response']);
+
+        return response()->json([
+            'url' => $audio['url']
+        ]);
     }
 }

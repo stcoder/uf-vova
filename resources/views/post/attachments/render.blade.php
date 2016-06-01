@@ -1,10 +1,10 @@
 <div data-attachment-id="{{ $attachment->id }}" data-attachment-type="{{ $attachment->type }}" class="post-attachment post-attachment-{{ $attachment->type }} n{{$key}}">
     @if($attachment->type === 'photo')
         <a href="?show=modal&type={{$attachment->type}}&id={{$attachment->id}}&post={{$post->id}}" onclick="return showAttachment(this);" rel="nofollow">
-            <img src="{{ $attachment->srcs['src_big'] }}" alt="{{ $attachment->title }}" class="img-rounded img-responsive">
+            <img src="{{ $attachment->srcs['image_big'] }}" alt="{{ $attachment->title }}" class="img-rounded img-responsive">
         </a>
     @elseif($attachment->type === 'video')
-        <a href="?show=modal&type={{$attachment->type}}&id={{$attachment->id}}&post={{$post->id}}" onclick="return showAttachment(this);" rel="nofollow" data-player="{{ $attachment->srcs['player'] }}">
+        <a href="?show=modal&type={{$attachment->type}}&id={{$attachment->id}}&post={{$post->id}}" onclick="return showAttachment(this);" rel="nofollow">
             <img src="{{ $attachment->srcs['image'] }}" alt="{{ $attachment->title }}" class="img-rounded img-responsive">
         </a>
     @elseif($attachment->type === 'album')

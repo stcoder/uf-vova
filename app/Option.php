@@ -11,6 +11,12 @@ use Cache;
  * @property string $title
  * @property string $value
  * @property string $other_opts
+ * @method static \Illuminate\Database\Query\Builder|\App\Option whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Option whereName($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Option whereTitle($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Option whereValue($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Option whereOtherOpts($value)
+ * @mixin \Eloquent
  */
 class Option extends Model {
 

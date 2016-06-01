@@ -19,6 +19,7 @@ class Integration extends Controller {
     public function main() {
         $isUserIntegrated = Option::get('vk-user-id', null);
         $isGroupIntegrated = Option::get('vk-group-id', null);
+        $isBoardIntegrated = Option::get('vk-board-topic-id', null);
         $data = ['user' => [], 'group' => []];
 
         if ($isUserIntegrated) {
@@ -36,21 +37,24 @@ class Integration extends Controller {
                 'name' => Option::get('vk-group-name'),
                 'photo' => Option::get('vk-group-photo'),
                 'integrated-date' => Carbon::createFromTimestamp(Option::get('vk-group-integrated-date')),
-                'count' => [
-                    'members' => Option::get('vk-group-count-members'),
-                    'photos' => Option::get('vk-group-count-photos'),
-                    'albums' => Option::get('vk-group-count-albums'),
-                    'topics' => Option::get('vk-group-count-topics'),
-                    'videos' => Option::get('vk-group-count-videos'),
-                    'audios' => Option::get('vk-group-count-audios'),
-                    'docs' => Option::get('vk-group-count-docs')
-                ]
+                'updated-date' => Carbon::createFromTimestamp(Option::get('vk-group-last-update-date')),
+                'posts_count' => Option::get('vk-posts-count')
             ];
 
             if (Option::has('vk-group-updated-date')) {
                 $data['group']['updated-date'] = Carbon::createFromTimestamp(Option::get('vk-group-updated-date'));
             }
         }
+        
+        if ($isBoardIntegrated) {
+            $data['review'] = [
+                'id' => Option::get('vk-board-topic-id'),
+                'integrated-date' => Carbon::createFromTimestamp(Option::get('vk-board-integrated-date')),
+                'reviews_count' => Option::get('vk-reviews-count'),
+                'updated-date' => Carbon::createFromTimestamp(Option::get('vk-reviews-last-update-date'))
+            ];
+        }
+        
         $display = view('admin.integration.services', $data)->render();
         return Admin::view($display, 'Интеграция');
     }
@@ -134,12 +138,73 @@ class Integration extends Controller {
     }
 
     /**
+     * Выводит список топиков обсуждений для подключения.
+     *
+     * @return \Illuminate\View\View
+     * @throws \Exception
+     */
+    public function boardTopic() {
+        $data = [];
+
+        $response = Vk::call('board.getTopics', [
+            'group_id' => Option::get('vk-group-id'),
+            'count' => 100,
+            'extended' => 0,
+            'preview' => 1
+        ]);
+
+        $data['count'] = $response['response']['topics'][0];
+        $data['topics'] = array_slice($response['response']['topics'], 1);
+
+        $display = view('admin.integration.board-select', $data)->render();
+        return Admin::view($display, 'Выберите топик обсуждений с отзывами');
+    }
+
+    /**
+     * @param $topic_id
+     * @return mixed
+     * @throws \Exception
+     */
+    public function boardTopicSet($topic_id) {
+        $response = Vk::call('board.getComments', [
+            'group_id' => Option::get('vk-group-id'),
+            'topic_id' => $topic_id,
+            'count' => 0
+        ]);
+
+        $comments = $response['response']['comments'][0];
+
+        Option::set('vk-board-topic-id', $topic_id);
+        Option::set('vk-board-integrated-date', time());
+        Option::set('vk-reviews-count', $comments);
+
+        Session::flash('flash_message', 'vk-board-topic-integrated');
+        Session::flash('flash_type', 'success');
+
+        return redirect(route('admin.integration'));
+    }
+
+    /**
+     * @return mixed
+     */
+    public function boardTopicOff() {
+        Option::set('vk-board-topic-id', null);
+        Option::set('vk-board-integrated-date', null);
+        Option::set('vk-reviews-count', null);
+
+        Session::flash('flash_message', 'vk-board-topic-off');
+        Session::flash('flash_type', 'success');
+
+        return redirect(route('admin.integration'));
+    }
+
+    /**
      * Redirect the user to the vkontakte authentication page.
      *
      * @return Response
      */
     public function redirectToProvider() {
-        return Socialite::with('vkontakte')->scopes(['offline', 'groups', 'wall', 'video'])->redirect();
+        return Socialite::with('vkontakte')->scopes(['offline', 'groups', 'wall', 'video', 'audio'])->redirect();
     }
 
     /**

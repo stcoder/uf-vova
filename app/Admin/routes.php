@@ -13,18 +13,13 @@ Route::get('integration', [
 	'uses' => '\App\Http\Controllers\Admin\Integration@main'
 ]);
 
-Route::get('integration/imports', [
-	'as' => 'admin.integration.imports',
-	'uses' => '\App\Http\Controllers\Admin\Imports@main'
-]);
-
-Route::get('integration/imports/posts', [
-	'as' => 'admin.integration.imports.posts',
+Route::get('integration/posts', [
+	'as' => 'admin.integration.posts',
 	'uses' => '\App\Http\Controllers\Admin\Imports@posts'
 ]);
 
-Route::get('integration/imports/posts/import', [
-	'as' => 'admin.integration.imports.posts.import',
+Route::get('integration/posts/import', [
+	'as' => 'admin.integration.posts.import',
 	'uses' => '\App\Http\Controllers\Admin\Imports@postsImport'
 ]);
 
@@ -56,4 +51,19 @@ Route::get('integration/group_{group_id}', [
 Route::get('integration/group-off', [
 	'as' => 'admin.integration.group-off',
 	'uses' => '\App\Http\Controllers\Admin\Integration@groupOff'
+]);
+
+Route::get('integration/board-topic', [
+	'as' => 'admin.integration.board-topic',
+	'uses' => '\App\Http\Controllers\Admin\Integration@boardTopic'
+]);
+
+Route::get('integration/board-topic_{topic_id}', [
+	'as' => 'admin.integration.board-topic-set',
+	'uses' => '\App\Http\Controllers\Admin\Integration@boardTopicSet'
+]);
+
+Route::get('integration/board-topic-off', [
+	'as' => 'admin.integration.board-topic-off',
+	'uses' => '\App\Http\Controllers\Admin\Integration@boardTopicOff'
 ]);

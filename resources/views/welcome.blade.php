@@ -1,44 +1,6 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Универсальные бойцы</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="/bower_components/owl.carousel/dist/assets/owl.carousel.min.css">
-    <link rel="stylesheet" href="/bower_components/owl.carousel/dist/assets/owl.theme.default.min.css">
-    <link rel="stylesheet" href="/css/app.css">
-  </head>
-<body>
+@extends('app')
 
-{{-- Start nav --}}
-<div class="navbar-container">
-  <div class="container">
-    <nav class="navbar navbar-default">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="#">Универсальные бойцы</a>
-      </div>
-      <div id="navbar" class="collapse navbar-collapse">
-        <ul class="nav navbar-nav navbar-right">
-          <li><a class="nav-control" href="/about-clube.html" data-nav-section="about-clube"><span>О клубе</span></a></li>
-          <li><a class="nav-control" href="#" data-nav-section="price"><span>Расписание и стоимость</span></a></li>
-          <li><a class="nav-control" href="#"><span>Лента событий</span></a></li>
-          <li><a class="nav-control" href="#"><span>Медиа</span></a></li>
-          <li><a class="nav-control" href="#"><span>Контакты</span></a></li>
-        </ul>
-      </div>
-    </nav>
-  </div>
-</div>
-{{-- End nav --}}
-
+@section('content')
 {{-- Start slider --}}
 <div id="slider" data-section="slider">
   <div class="owl-carousel owl-carousel-fullwidth">
@@ -109,7 +71,7 @@
 {{-- End slider --}}
 
 {{-- Start about clube --}}
-<div id="about-clube" data-section="about-clube" style="background-image: url('http://subtlepatterns2015.subtlepatterns.netdna-cdn.com/patterns/concrete_seamless.png'); background-attachment: fixed;">
+<div id="about" data-section="about" style="background-image: url('http://subtlepatterns2015.subtlepatterns.netdna-cdn.com/patterns/concrete_seamless.png'); background-attachment: fixed;">
   <div class="container-fluid">
     {{-- Start section header --}}
     <div class="row">
@@ -368,7 +330,7 @@
 {{-- End price --}}
 
 {{-- Start posts --}}
-<div id="posts" data-section="posts" style="background-color: #44465B; background-image: url('http://subtlepatterns2015.subtlepatterns.netdna-cdn.com/patterns/ravenna.png'); background-attachment: fixed;">
+<div id="posts" data-section="posts" class="posts" style="background-color: #44465B; background-image: url('http://subtlepatterns2015.subtlepatterns.netdna-cdn.com/patterns/ravenna.png'); background-attachment: fixed;">
   <div class="container">
     {{-- Start post header --}}
     <div class="row">
@@ -390,30 +352,16 @@
 
     {{-- Start items --}}
     <div class="row">
-      <div class="col-sm-4 --col-1">
+      <div class="posts-container">
         @foreach($posts as $key => $post)
-          @if($key === 0 || $key === 3)
+          <div class="col-lg-3 col-md-4 col-sm-6">
             @include('post.item', ['post' => $post])
-          @endif
-        @endforeach
-      </div>
-      <div class="col-sm-4 --col-2">
-        @foreach($posts as $key => $post)
-          @if($key === 1 || $key === 4)
-            @include('post.item', ['post' => $post])
-          @endif
-        @endforeach
-      </div>
-      <div class="col-sm-4 --col-3">
-        @foreach($posts as $key => $post)
-          @if($key === 2 || $key === 5)
-            @include('post.item', ['post' => $post])
-          @endif
+          </div>
         @endforeach
       </div>
       @if($next_posts)
       <div class="col-sm-12">
-        <div class="action-next-loader">
+        <div class="action-next-loader loader-posts">
           <button type="button" id="load_next_posts" data-url="{{$next_posts}}" data-loading-text="Загружаю..." class="btn btn-primary" autocomplete="off">
             Показать еще
           </button>
@@ -426,27 +374,99 @@
 </div>
 {{-- End posts --}}
 
-{{-- Start modal --}}
-<div id="modal" class="modal fade" tabindex="-1" role="dialog">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title"></h4>
+{{-- Start reviews --}}
+<div id="reviews" data-section="reviews" class="reviews">
+  <div class="container">
+    {{-- Start post header --}}
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="history">
+          <div class="section-header">
+            <h2 class="section-header-title text-center">Отзывы</h2>
+            <h3 class="section-header-title-sub text-center">мысли наших бойцов о тренировках</h3>
+            <div class="section-header-divider">
+              <span class="section-header-divider-left"></span>
+              <i class="section-header-divider-icon glyphicon glyphicon-star"></i>
+              <span class="section-header-divider-right"></span>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="modal-body"></div>
+    </div>
+    {{-- End post header --}}
+
+    {{-- Start items --}}
+    <div class="row review">
+      <div class="col-sm-3 col-sm-offset-1 text-center review-profile">
+        <img src="{{ $review->profile->photo }}" class="review-profile-image">
+        <p><a target="_blank" href="http://vk.com/{{ $review->profile->domain }}" class="review-profile-link">{{ $review->profile->first_name }} {{ $review->profile->last_name }}</a></p>
+      </div>
+      <div class="col-sm-6 review-text">
+        <div class="review-text-small">{!! str_limit($review->text, 400) !!}</div>
+        @if(strlen($review->text) > 400)
+          <div class="review-text-link"><a href="#">Прочитать полностью</a></div>
+          <div class="review-text-full">{!! $review->text !!}</div>
+        @endif
+        <div class="action-next-loader loader-review">
+          <button type="button" id="load_next_reviews" data-url="{{route('load_review')}}" data-loading-text="Загружаю..." class="btn btn-primary" autocomplete="off">
+            Еще отзыв
+          </button>
+        </div>
+      </div>
+    </div>
+    {{-- End items --}}
+  </div>
+</div>
+{{-- End reviews --}}
+
+{{-- Start contacts --}}
+<div id="contacts" data-section="contacts" class="contacts" style="background-image: url(//subtlepatterns2015.subtlepatterns.netdna-cdn.com/patterns/cork-wallet.png); background-attachment: fixed;">
+  <div class="container">
+    {{-- Start contact header --}}
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="history">
+          <div class="section-header">
+            <h2 class="section-header-title text-center">Контакты</h2>
+            <h3 class="section-header-title-sub text-center">наше местоположение и способы связи</h3>
+            <div class="section-header-divider">
+              <span class="section-header-divider-left"></span>
+              <i class="section-header-divider-icon glyphicon glyphicon-star"></i>
+              <span class="section-header-divider-right"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {{-- End contact header --}}
+
+    <div class="row">
+      <div class="col-sm-4">        
+        <div class="contact-card">
+          <div class="contact-card-image">
+            <img src="https://pp.vk.me/c633220/v633220404/73d3/qC6hp51J-74.jpg" class="img-circle" alt="Владимир Медведев">
+          </div>
+          <div class="contact-card-title">Владимир Медведев</div>
+          <div class="contact-card-info">
+            <p>+7 (982) 639-75-18</p>
+            <p><a href="https://vk.com/write224476404" target="_blank">Написать в VK</a></p>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-7 col-sm-offset-1">
+        <p><i class="glyphicon glyphicon-map-marker"></i> ул. Красноармейская, 27 / СОК "Факел", 2 этаж.</p>
+        <script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?sid=c6Wh4eG8IcQ9zUNOElkabK1xgSbrlF5a&width=100%&height=250&lang=ru_RU&sourceType=constructor&scroll=false"></script>
+      </div>
+      <div class="col-sm-12">
+        <div class="contact-socials-header">Мы в социальных сетях</div>
+        <ul class="contact-socials list-unstyled">
+          <li><a target="_blank" href="https://vk.com/universalfightersekb"><i class="fa fa-vk"></i></a></li>
+          <li><a target="_blank" href="https://www.facebook.com/%D0%A3%D0%BD%D0%B8%D0%B2%D0%B5%D1%80%D1%81%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B5-%D0%B1%D0%BE%D0%B9%D1%86%D1%8B-%D0%95%D0%BA%D0%B0%D1%82%D0%B5%D1%80%D0%B8%D0%BD%D0%B1%D1%83%D1%80%D0%B3-1501676683493080/"><i class="fa fa-facebook"></i></a></li>
+          <li><a target="_blank" href="https://www.instagram.com/universal_fighters_ekb/"><i class="fa fa-instagram"></i></a></li>
+        </ul>
+      </div>
     </div>
   </div>
 </div>
-{{-- End modal --}}
-
-<script src="/bower_components/jquery/dist/jquery.min.js"></script>
-<script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-<script src="/bower_components/owl.carousel/dist/owl.carousel.min.js"></script>
-<script src="/bower_components/waypoints/lib/jquery.waypoints.min.js"></script>
-<script src="/uppod/uppod.js"></script>
-<script src="/uppod/audio.js"></script>
-<script src="/bower_components/waypoints/lib/jquery.waypoints.min.js"></script>
-<script src="/js/app.js"></script>
-</body>
-</html>
+{{-- End contacts --}}
+@endsection

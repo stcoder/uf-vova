@@ -1,58 +1,105 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Универсальные бойцы</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Laravel</title>
-
-	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-social/4.11.0/bootstrap-social.min.css">
-	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.7.6/jquery.fullPage.min.css">
-	<link href="{{ asset('/css/app.css') }}" rel="stylesheet">
-
-	<!-- Fonts -->
 	<link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
-
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-	<!--[if lt IE 9]>
-		<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-	<![endif]-->
+	<link rel="stylesheet" href="/bower_components/owl.carousel/dist/assets/owl.carousel.min.css">
+	<link rel="stylesheet" href="/bower_components/owl.carousel/dist/assets/owl.theme.default.min.css">
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+	<link rel="stylesheet" href="/css/app.css">
 </head>
 <body>
-	<nav class="navbar navbar-static-top navbar-inverse">
-		<div class="container">
+
+{{-- Start nav --}}
+<div class="navbar-container @if(Route::getCurrentRoute()->getName() !== 'home') navbar-static-top @endif">
+	<div class="container">
+		<nav class="navbar navbar-default">
 			<div class="navbar-header">
-				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-navbar-collapse" aria-expanded="false">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
 					<span class="sr-only">Toggle navigation</span>
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#">Универсальные бойцы</a>
+				<a class="navbar-brand" href="/"><img src="{{ asset('/images/logo.png') }}" width="50px">Универсальные бойцы</a>
 			</div>
-
-			<div class="collapse navbar-collapse" id="main-navbar-collapse">
+			<div id="navbar" class="collapse navbar-collapse">
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="#">О клубе</a></li>
-					<li><a href="#">Расписание и стоимость</a></li>
-					<li><a href="#">Лента событий</a></li>
-					<li><a href="#">Медиа</a></li>
-					<li><a href="#">Контакты</a></li>
+					<li><a class="nav-control" href="/#about" data-nav-section="about"><span>О клубе</span></a></li>
+					<li><a class="nav-control" href="/#price" data-nav-section="price"><span>Расписание и стоимость</span></a></li>
+					<li><a class="nav-control" href="/#posts" data-nav-section="posts"><span>Лента событий</span></a></li>
+					<li><a class="nav-control" href="/#reviews" data-nav-section="reviews"><span>Отзывы</span></a></li>
+					<li><a class="nav-control" href="/#contacts" data-nav-section="contacts"><span>Контакты</span></a></li>
 				</ul>
 			</div>
+		</nav>
+	</div>
+</div>
+{{-- End nav --}}
+
+<div class="content">
+@yield('content')
+</div>
+
+{{-- Start footer --}}
+<div id="footer" class="footer-container">
+	<div class="footer">
+			<div class="container">
+			<div class="col-sm-4">
+				<ul class="footer-links list-unstyled">
+					<li><a href="/#about" data-nav-section="about"><span>О клубе</span></a></li>
+					<li><a href="/#price" data-nav-section="price"><span>Расписание и стоимость</span></a></li>
+					<li><a href="/#posts" data-nav-section="posts"><span>Лента событий</span></a></li>
+					<li><a href="/#reviews" data-nav-section="reviews"><span>Отзывы</span></a></li>
+					<li><a href="/#contacts" data-nav-section="contacts"><span>Контакты</span></a></li>
+				</ul>
+			</div>
+			<div class="col-sm-4">
+				<div class="footer-logo-container text-center">
+					<a href="/" class="footer-logo">
+						<img src="{{ asset('images/logo-big.png') }}" class="footer-logo-img">
+						<p class="footer-logo-title">Универсальные бойцы</p>
+						<p class="footer-logo-subtitle">город Екатеринбург</p>
+					</a>
+					<p>© {{ date('Y') }}</p>
+				</div>
+			</div>
+			<div class="col-sm-4">
+				<div class="pull-right">
+					<div class="footer-phone">+7 (982) 639-75-18</div>
+					<ul class="footer-socials list-unstyled">
+			          <li><a target="_blank" href="https://vk.com/universalfightersekb"><i class="fa fa-vk"></i></a></li>
+			          <li><a target="_blank" href="https://www.facebook.com/%D0%A3%D0%BD%D0%B8%D0%B2%D0%B5%D1%80%D1%81%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B5-%D0%B1%D0%BE%D0%B9%D1%86%D1%8B-%D0%95%D0%BA%D0%B0%D1%82%D0%B5%D1%80%D0%B8%D0%BD%D0%B1%D1%83%D1%80%D0%B3-1501676683493080/"><i class="fa fa-facebook"></i></a></li>
+			          <li><a target="_blank" href="https://www.instagram.com/universal_fighters_ekb/"><i class="fa fa-instagram"></i></a></li>
+			        </ul>
+				</div>
+			</div>
 		</div>
-	</nav>
+	</div>
+</div>
+{{-- End footer --}}
 
-	@yield('content')
+{{-- Start modal --}}
+<div id="modal" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title"></h4>
+			</div>
+			<div class="modal-body"></div>
+		</div>
+	</div>
+</div>
+{{-- End modal --}}
 
-	<!-- Scripts -->
-	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
-	<script src="//cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.7.6/vendors/jquery.easings.min.js"></script>
-	<script src="//cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.7.6/vendors/jquery.slimscroll.min.js"></script>
-	<script src="//cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.7.6/jquery.fullPage.min.js"></script>
-	<script src="{{ asset('/js/app.js') }}"></script>
+<script src="/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="/bower_components/owl.carousel/dist/owl.carousel.min.js"></script>
+<script src="/bower_components/waypoints/lib/jquery.waypoints.min.js"></script>
+<script src="/js/app.js"></script>
 </body>
 </html>

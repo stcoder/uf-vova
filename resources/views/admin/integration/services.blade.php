@@ -10,6 +10,10 @@
                     Вы успешно подключили группу.
                 @elseif (Session::get('flash_message') === 'vk-group-off')
                     Вы отключили группу.
+                @elseif (Session::get('flash_message') === 'vk-board-topic-integrated')
+                    Вы успешно подключили отзывы.
+                @elseif (Session::get('flash_message') === 'vk-board-topic-off')
+                    Вы отключили отзывы.
                 @endif
             </div>
         </div>
@@ -69,13 +73,7 @@
                 </div>
                 @if (isset($group['id']) && $group['id'])
                     <ul class="list-group">
-                        <li class="list-group-item">Участников <span class="badge">{{ $group['count']['members'] }}</span></li>
-                        <li class="list-group-item">Фотографий <span class="badge">{{ $group['count']['photos'] }}</span></li>
-                        <li class="list-group-item">Альбомов <span class="badge">{{ $group['count']['albums'] }}</span></li>
-                        <li class="list-group-item">Топиков <span class="badge">{{ $group['count']['topics'] }}</span></li>
-                        <li class="list-group-item">Видео <span class="badge">{{ $group['count']['videos'] }}</span></li>
-                        <li class="list-group-item">Музыка <span class="badge">{{ $group['count']['audios'] }}</span></li>
-                        <li class="list-group-item">Документы <span class="badge">{{ $group['count']['docs'] }}</span></li>
+                        <li class="list-group-item">Постов <span class="badge">{{ $group['posts_count'] }}</span></li>
                     </ul>
                 @endif
                 <div class="panel-footer">
@@ -83,6 +81,38 @@
                         <a href="{{ route('admin.integration.group-off') }}" class="btn btn-danger">Отключить</a>
                     @else
                         <a href="{{ route('admin.integration.group') }}" class="btn btn-primary">Подключить</a>
+                    @endif
+                </div>
+            </div>
+        </div>
+    @endif
+    @if (isset($user['id']) && $user['id'] && isset($group['id']) && $group['id'])
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Отзывы</h3>
+                </div>
+                <div class="panel-body">
+                    @if (isset($review['id']) && $review['id'])
+                        Отзывы подключены
+                        <div class="small">подключен {{ $review['integrated-date']->formatLocalized('%d %B %Yг.') }}</div>
+                        @if (isset($review['updated-date']))
+                            <div class="small">обновлен {{ $review['updated-date']->formatLocalized('%d %B %Yг. в %H:%I') }}</div>
+                        @endif
+                    @else
+                        Подключите топик из обсуждения в котором содержатся отзывы.
+                    @endif
+                </div>
+                @if (isset($review['id']) && $review['id'])
+                    <ul class="list-group">
+                        <li class="list-group-item">Отзывов <span class="badge">{{ $review['reviews_count'] }}</span></li>
+                    </ul>
+                @endif
+                <div class="panel-footer">
+                    @if (isset($review['id']) && $review['id'])
+                        <a href="{{ route('admin.integration.board-topic-off') }}" class="btn btn-danger">Отключить</a>
+                    @else
+                        <a href="{{ route('admin.integration.board-topic') }}" class="btn btn-primary">Подключить</a>
                     @endif
                 </div>
             </div>
