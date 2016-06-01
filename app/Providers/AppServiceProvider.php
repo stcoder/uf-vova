@@ -16,7 +16,7 @@ class AppServiceProvider extends ServiceProvider {
 	 */
 	public function boot()
 	{
-		setlocale(LC_ALL, 'ru_RU');
+		setlocale(LC_ALL, 'ru_RU.UTF-8');
 		Carbon::setLocale(config('app.locale'));
 		\Shortcode::register('slider', '\App\Shortcode\Slider');
 		\Shortcode::register('section', '\App\Shortcode\Section');
