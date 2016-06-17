@@ -16,11 +16,9 @@ Route::get('/', [
 	'uses' => 'HomeController@index'
 ]);
 
-Route::get('home', 'HomeController@index');
-
-Route::get('timeline', function() {
-	return view('timeline');
-});
+Route::get('/o-klube.html', ['as' => 'about', function() {
+	return view('about', ['histories' => \App\HistoryDate::orderBy('order', 'asc')->get()]);
+}]);
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',

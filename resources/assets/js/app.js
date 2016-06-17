@@ -131,8 +131,25 @@ $('.history-item').waypoint({
     $el.find('.history-caption').addClass('animated fadeInLeft');
     $el.find('.history-badge-circle').addClass('animated bounceIn');
     $el.find('.history-badge-icon').addClass('animated rotateInDownLeft');
-    $el.find('.history-body-title').addClass('animated fadeInDown');
-    $el.find('.history-body-content').addClass('animated fadeInUp');
+    $el.find('img').addClass('animated fadeIn').css({'animation-delay': '1.8s'});
+    $el.find('.history-body-title').each(function(num) {
+      var delay = (num + 1) * 1.4;
+      $(this).addClass('animated fadeInDown').css({
+        'animation-delay': delay + 's'
+      });
+    });
+    $el.find('.history-body-content').each(function(num) {
+      var delay = (num + 1) * 1.6;
+      $(this).addClass('animated fadeInUp').css({
+        'animation-delay': delay + 's'
+      });
+    });
+    $el.find('.history-body-time').each(function(num) {
+      var delay = (num + 1) * 1.8;
+      $(this).addClass('animated fadeInLeft').css({
+        'animation-delay': delay + 's'
+      });
+    });
   },
   offset: '80%'
 });

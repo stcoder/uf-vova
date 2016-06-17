@@ -1,33 +1,25 @@
 <?php namespace App\Console\Commands;
 
+use App\Imports\Review;
 use Illuminate\Console\Command;
-use GuzzleHttp\Client;
-use GuzzleHttp\Message\Request;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 
-class VkLoadPosts extends Command {
+class VkReviewsLoad extends Command {
 
 	/**
 	 * The console command name.
 	 *
 	 * @var string
 	 */
-	protected $name = 'vk:load_posts';
+	protected $name = 'vk:load_reviews';
 
 	/**
 	 * The console command description.
 	 *
 	 * @var string
 	 */
-	protected $description = 'Загружает посты из группы ВК.';
-
-	/**
-	 * Идентификатор группы Vk.
-	 *
-	 * @var string
-	 */
-	protected $ownerId = null;
+	protected $description = 'Загрузить отзывы.';
 
 	/**
 	 * Create a new command instance.
@@ -40,24 +32,20 @@ class VkLoadPosts extends Command {
 	}
 
 	/**
-	 * Execute the console.
+	 * Execute the console command.
 	 *
 	 * @return mixed
 	 */
-	public function handle()
+	public function fire()
 	{
 		$offset = $this->argument('offset') ?: 0;
-		$count = $this->argument('count') ?: 10;
+		$count = $this->argument('count') ?: 100;
 
-		$this->info('Начинаю загрузку постов. ' . date('d.m.Y H:i'));
-		$res = \App\Imports\Post::import($offset, $count);
+		$this->info('Начинаю загрузку отзывов.' . date('d.m.Y H:i'));
+		$res = Review::import($offset, $count);
 		$this->info('Загрузка завершена.');
-		$this->comment('Запрос: offset -> ' . $offset . '; count -> ' . $count);
 		$this->comment('Всего записей: ' . $res['counts']['all']);
-		$this->comment('Постов: ' . $res['counts']['posts']);
-		$this->comment('Новых постов: ' . $res['counts']['new_posts']);
-		$this->comment('Вложений: ' . $res['counts']['attachments']);
-		$this->comment('Новых вложений: ' . $res['counts']['new_attachments']);
+		$this->comment('Запрос: offset -> ' . $offset . '; count -> ' . $count);
 	}
 
 	/**

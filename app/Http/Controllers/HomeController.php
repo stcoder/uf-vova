@@ -1,6 +1,9 @@
 <?php namespace App\Http\Controllers;
 
+use App\HistoryDate;
 use App\Review;
+use App\ScheduleAndCost;
+use App\Slide;
 use Illuminate\View\View;
 use Request;
 use App\Post;
@@ -30,6 +33,9 @@ class HomeController extends Controller {
 		$data = [
 			'posts' => $posts,
 			'review' => $review,
+			'slides' => Slide::orderBy('sort', 'asc')->get(),
+			'histories' => HistoryDate::orderBy('order', 'asc')->get(),
+			'schedule_and_cost' => ScheduleAndCost::orderBy('order', 'asc')->get(),
 			'next_posts' => $posts->nextPageUrl()
 		];
 

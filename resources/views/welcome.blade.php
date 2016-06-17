@@ -4,18 +4,19 @@
 {{-- Start slider --}}
 <div id="slider" data-section="slider">
   <div class="owl-carousel owl-carousel-fullwidth">
+    @foreach($slides as $slide)
     {{-- Start slide --}}
-    <div class="item" style="background-image: url(//img11.nnm.ru/4/3/3/7/9/2ca11af4c6716b84fab2cca8ea4.jpg)">
+    <div class="item" style="background-image: url({{ $slide->image->thumbnail('big_slide') }})">
       <div class="overlay"></div>
       <div class="container" style="position: relative;">
         <div class="row">
           <div class="col-md-8 col-md-offset-2 text-center">
             <div class="slide-wrapper">
               <div class="slide-content">
-                <h1 class="slide-lead __to-animate">Вин Чун</h1>
-                <h2 class="slide-sub-lead __to-animate anim-delay-1-3">максимум эффективности при минимуме движений</h2>
+                <h1 class="slide-lead __to-animate">{{ $slide->title }}</h1>
+                <h2 class="slide-sub-lead __to-animate anim-delay-1-3">{{ $slide->description }}</h2>
                 <p class="__to-animate anim-delay-1-6">
-                  <a href="http://freehtml5.co/" target="_blank" class="btn btn-primary">Читать подробней</a>
+                  {!! link_to_route('page', 'Читать подробней', ['page' => $slide->page->slug], ['class' => 'btn btn-primary']) !!}
                 </p>
               </div>
             </div>
@@ -24,48 +25,7 @@
       </div>
     </div>
     {{-- End slide --}}
-
-    {{-- Start slide --}}
-    <div class="item" style="background-image: url(//img01.quesabesde.com/media/img/noti/0058/victor_fraile.jpg)">
-      <div class="overlay"></div>
-      <div class="container" style="position: relative;">
-        <div class="row">
-          <div class="col-md-8 col-md-offset-2 text-center">
-            <div class="slide-wrapper">
-              <div class="slide-content">
-                <h1 class="slide-lead __to-animate">Ушу-саньда</h1>
-                <h2 class="slide-sub-lead __to-animate anim-delay-1-3">спортивно-соревновательные поединки, проводимые в полный контакт, с добавлением бросковой техники</h2>
-                <p class="__to-animate anim-delay-1-6">
-                  <a href="http://freehtml5.co/" target="_blank" class="btn btn-primary">Читать подробней</a>
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    {{-- End slide --}}
-
-    {{-- Start slide --}}
-    <div class="item" style="background-image: url(//bjj59.ru/images/fon.jpg)">
-      <div class="overlay"></div>
-      <div class="container" style="position: relative;">
-        <div class="row">
-          <div class="col-md-8 col-md-offset-2 text-center">
-            <div class="slide-wrapper">
-              <div class="slide-content">
-                <h1 class="slide-lead __to-animate">Джиу джитсу</h1>
-                <h2 class="slide-sub-lead __to-animate anim-delay-1-3">японская вольная борьба и особая система приёмов самозащиты без оружия</h2>
-                <p class="__to-animate anim-delay-1-6">
-                  <a href="http://freehtml5.co/" target="_blank" class="btn btn-primary">Читать подробней</a>
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    {{-- End slide --}}
+    @endforeach
   </div>
 </div>
 {{-- End slider --}}
@@ -97,99 +57,48 @@
         <div class="history-container">
 
           {{-- Start history item --}}
-          <div class="history-item">
-            <div class="history-caption-container">
-              <div class="history-caption __to-animate">
-                <h3 class="history-caption-date">2008 <small>год</small></h3>
-                <div class="history-caption-message">С чего все началось</div>
-              </div>
-            </div>
-            <div class="history-body-container">
-              <div class="history-line"></div>
-              <div class="history-badge">
-                <div class="__to-animate anim-delay-0-3 history-badge-circle"></div>
-                <i class="__to-animate anim-delay-0-3 glyphicon glyphicon-arrow-right history-badge-icon"></i>
-              </div>
-              <div class="history-body">
-                <h3 class="history-body-title __to-animate anim-delay-0-3">Становление клуба</h3>
-                <div class="history-body-content __to-animate anim-delay-0-3">
-                  <p>Президент федерации Вин Чун Урала М. Бурдин возложил на плечи нынешнего тренера Владимира Медведева обязаности главного инструктора федерации.</p>
+          @foreach($histories as $history)
+            <div class="history-item">
+              <div class="history-caption-container">
+                <div class="history-caption __to-animate">
+                  <h3 class="history-caption-date">{{ $history->title }}</h3>
+                  @if($history->description)
+                  <div class="history-caption-message">{{ $history->description }}</div>
+                  @endif
                 </div>
               </div>
-            </div>
-          </div>
-          {{-- End history item --}}
-
-          {{-- Start history item --}}
-          <div class="history-item">
-            <div class="history-caption-container">
-              <div class="history-caption __to-animate">
-                <h3 class="history-caption-date">2008 <small>год</small></h3>
-                <div class="history-caption-message">Семинар</div>
+              <div class="history-body-container">
+                @foreach($history->events()->orderBy('date_event', 'ASC')->get() as $event)
+                  <div class="history-line"></div>
+                  <div class="history-badge">
+                    <div class="__to-animate anim-delay-0-3 history-badge-circle"></div>
+                    <i class="__to-animate anim-delay-0-3 glyphicon glyphicon-arrow-right history-badge-icon"></i>
+                  </div>
+                  <div class="history-body">
+                    <h3 class="history-body-title __to-animate">{{ $event->title }}</h3>
+                    @if($event->image)
+                      <img src="{{ $event->image }}" width="100%" class="img-responsive" alt="{{ $event->title }}">
+                      <br>
+                    @endif
+                    <div class="history-body-content __to-animate">{!! $event->description !!}</div>
+                    <div class="history-body-time __to-animate"><small>{{ \Carbon\Carbon::instance(new DateTime($event->date_event))->formatLocalized('%d.%m.%Y') }}</small></div>
+                  </div>
+                  <p>&nbsp;</p>
+                  <p>&nbsp;</p>
+                  @if($event->more)
+                    <a href="{{ route('about') }}" type="button" class="btn btn-primary">
+                      Подробней
+                    </a>
+                    @set('stop', true)
+                    @break
+                  @endif
+                @endforeach
               </div>
             </div>
-            <div class="history-body-container">
-              <div class="history-line"></div>
-              <div class="history-badge">
-                <div class="__to-animate anim-delay-0-3 history-badge-circle"></div>
-                <i class="__to-animate anim-delay-0-3 glyphicon glyphicon-arrow-right history-badge-icon"></i>
-              </div>
-              <div class="history-body">
-                <h3 class="history-body-title __to-animate anim-delay-0-3">Семинар Анатолия Белощина</h3>
-                <div class="history-body-content __to-animate anim-delay-0-3">
-                  <p>Был проведен третий семинар Анатолия Белощина Президента DMWCI, на котором была проведена успешная аттестация наших воспитаников на 1 уровень техники Siu Lim Tao.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          {{-- End history item --}}
-
-          {{-- Start history item --}}
-          <div class="history-item">
-            <div class="history-caption-container">
-              <div class="history-caption __to-animate">
-                <h3 class="history-caption-date">2008 <small>год</small></h3>
-                <div class="history-caption-message">Расширяемся</div>
-              </div>
-            </div>
-            <div class="history-body-container">
-              <div class="history-line"></div>
-              <div class="history-badge">
-                <div class="__to-animate anim-delay-0-3 history-badge-circle"></div>
-                <i class="__to-animate anim-delay-0-3 glyphicon glyphicon-arrow-right history-badge-icon"></i>
-              </div>
-              <div class="history-body">
-                <h3 class="history-body-title __to-animate anim-delay-0-3">Выход из состава</h3>
-                <div class="history-body-content __to-animate anim-delay-0-3">
-                  <p>Клуб вышел из состава Федерации Вин Чун Урала и присоединился к Международной Организации Вин Чун (International Wing Chun Organization).</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          {{-- End history item --}}
-
-          {{-- Start history item --}}
-          <div class="history-item">
-            <div class="history-caption-container">
-              <div class="history-caption __to-animate">
-                <h3 class="history-caption-date">2008 <small>год</small></h3>
-                <div class="history-caption-message">С чего все началось</div>
-              </div>
-            </div>
-            <div class="history-body-container">
-              <div class="history-line"></div>
-              <div class="history-badge">
-                <div class="__to-animate anim-delay-0-3 history-badge-circle"></div>
-                <i class="__to-animate anim-delay-0-3 glyphicon glyphicon-arrow-right history-badge-icon"></i>
-              </div>
-              <div class="history-body">
-                <h3 class="history-body-title __to-animate anim-delay-0-3">Становление клуба</h3>
-                <div class="history-body-content __to-animate anim-delay-0-3">
-                  <p>Президент федерации Вин Чун Урала М. Бурдин возложил на плечи нынешнего тренера Владимира Медведева обязаности главного инструктора федерации.</p>
-                </div>
-              </div>
-            </div>
-          </div>
+            @if(isset($stop) && $stop === true)
+              @break
+            @endif
+          @endforeach
           {{-- End history item --}}
 
         </div>
@@ -221,110 +130,20 @@
     </div>
     {{-- End price header --}}
 
-    {{-- Start items --}}
     <div class="row price-wrappers">
-      <div class="col-sm-4">
+    @foreach($schedule_and_cost as $item)
+      {{-- Start items --}}
+      <div class="col-sm-12">
         <div class="price">
-          <div class="price-header">Разовое занятие</div>
+          <div class="price-header">{{ $item->title }}</div>
           <div class="price-content">
-            <div class="price-cost">
-              400&nbsp;<small>руб.</small>
-              <div class="price-cost-desc">для мужчин и женщин</div>
-            </div>
-            <div class="price-separator"></div>
-            <div class="price-body">
-              <p>Длительность тренировки: 2 часа</p>
-              <p>Возраст: от 18 лет</p>
-              <p>Занятия проходят каждый <strong>вторник</strong>, <strong>пятницу</strong> и <strong>воскрсенье</strong> в <u>20:00</u>.</p>
-            </div>
+            <div class="price-body">{!! $item->text !!}</div>
           </div>
         </div>
       </div>
-      <div class="col-sm-4">
-        <div class="price">
-          <div class="price-header">Старшая группа</div>
-          <div class="price-content">
-            <div class="price-body">
-              <p class="price-body-title">Четыре занятия:</p>
-              <div class="container-fluid">
-                <div class="row">
-                  <div class="col-sm-6">
-                    <div class="price-cost">
-                      1600&nbsp;<small>руб.</small>
-                      <div class="price-cost-desc">для мужчин</div>
-                    </div>
-                  </div>
-                  <div class="col-sm-6">
-                    <div class="price-cost">
-                      1400&nbsp;<small>руб.</small>
-                      <div class="price-cost-desc">для женщин</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="price-separator"></div>
-              <div class="price-body-title">Восемь занятий:</div>
-              <div class="container-fluid">
-                <div class="row">
-                  <div class="col-sm-6">
-                    <div class="price-cost">
-                      1900&nbsp;<small>руб.</small>
-                      <div class="price-cost-desc">для мужчин</div>
-                    </div>
-                  </div>
-                  <div class="col-sm-6">
-                    <div class="price-cost">
-                      1600&nbsp;<small>руб.</small>
-                      <div class="price-cost-desc">для женщин</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="price-separator"></div>
-              <div class="price-body-title">Двенадцать занятий:</div>
-              <div class="container-fluid">
-                <div class="row">
-                  <div class="col-sm-6">
-                    <div class="price-cost">
-                      2400&nbsp;<small>руб.</small>
-                      <div class="price-cost-desc">для мужчин</div>
-                    </div>
-                  </div>
-                  <div class="col-sm-6">
-                    <div class="price-cost">
-                      2100&nbsp;<small>руб.</small>
-                      <div class="price-cost-desc">для женщин</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="price-separator"></div>
-              <p>Длительность тренировки: 2 часа</p>
-              <p>Возраст: от 18 лет</p>
-              <p>Занятия проходят каждый <strong>вторник</strong>, <strong>пятницу</strong> и <strong>воскрсенье</strong> в <u>20:00</u>.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-4">
-        <div class="price">
-          <div class="price-header">Детская группа</div>
-          <div class="price-content">
-            <div class="price-cost">
-              1800&nbsp;<small>руб.</small>
-              <div class="price-cost-desc">абонемент на 12 занятий</div>
-            </div>
-            <div class="price-separator"></div>
-            <div class="price-body">
-              <p>Длительность тренировки: 1 час 30 минут</p>
-              <p>Возраст: от 7 до 13 лет</p>
-              <p>Занятия проходят каждый <strong>вторник</strong>, <strong>пятницу</strong> и <strong>воскрсенье</strong> в <u>18:30</u>.</p>
-            </div>
-          </div>
-        </div>
-      </div>
+      {{-- End items --}}
+      @endforeach
     </div>
-    {{-- End items --}}
   </div>
 </div>
 {{-- End price --}}

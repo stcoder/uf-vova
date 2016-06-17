@@ -50,7 +50,8 @@ class Slide extends Model
 
     public function setImageAttribute($value)
     {
-        $this->image->delete();
+        if ($this->image)
+            $this->image->delete();
 
         if (!is_null($value)) {
             $imageName = last(explode('/', $value));

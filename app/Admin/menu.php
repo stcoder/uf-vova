@@ -3,6 +3,9 @@
 use App\Option;
 
 Admin::menu()->url('/')->label('Dashboard')->icon('fa-dashboard');
+Admin::menu(\App\Page::class)->label('Страницы')->icon('fa-file-text');
+Admin::menu(\App\Slide::class)->label('Слайды')->icon('fa-picture-o');
+Admin::menu(\App\ScheduleAndCost::class)->label('Расписание и стоимость')->icon('fa-list-alt');
 Admin::menu()->url('integration')->label('Интеграция')->icon('fa-angle-double-up')->items(function() {
     Admin::menu()->url('integration')->label('Подключение')->icon('fa-plus');
     if (\DB::getDoctrineSchemaManager()->tablesExist('options')) {
@@ -15,5 +18,7 @@ Admin::menu()->url('integration')->label('Интеграция')->icon('fa-angle
         }
     }
 });
-Admin::menu(\App\Page::class)->label('Страницы')->icon('fa-file-text');
-Admin::menu(\App\Slide::class)->label('Слайды')->icon('fa-picture-o');
+Admin::menu()->url('history')->label('История')->icon('fa-history')->items(function() {
+    Admin::menu(\App\HistoryDate::class)->label('Даты')->icon('fa-calendar');
+    Admin::menu(\App\HistoryEvent::class)->label('События')->icon('fa-tasks');
+});

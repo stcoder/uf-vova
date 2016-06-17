@@ -16,7 +16,8 @@
     "pingpong/shortcode": "2.0",
     "guzzlehttp/guzzle": "~6.0",
 		"laravel/socialite": "^2.0",
-		"socialiteproviders/vkontakte": "^1.1.2"
+		"socialiteproviders/vkontakte": "^2.0.1",
+		"radic/blade-extensions": "^6.2"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "~4.0",

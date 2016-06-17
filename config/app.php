@@ -154,7 +154,8 @@ return [
 		'Illuminate\Html\HtmlServiceProvider',
 		'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
 		'Intervention\Image\ImageServiceProvider',
-		'SocialiteProviders\Manager\ServiceProvider'
+		'SocialiteProviders\Manager\ServiceProvider',
+        'Radic\BladeExtensions\BladeExtensionsServiceProvider'
 
 	],
 
