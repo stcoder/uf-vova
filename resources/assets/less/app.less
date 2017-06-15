@@ -868,6 +868,10 @@ html, body {
     font-size: 18px;
     font-weight: 300;
     line-height: 1.8em;
+
+    &--with-image {
+      margin: 60px 0;
+    }
   }
 }
 /** End post one **/
@@ -1254,3 +1258,40 @@ html, body {
   }
 }
 /** End footer **/
+
+
+.news {
+  margin-bottom: 4rem;
+
+  &-title {
+    margin-top: 0;
+  }
+
+  &-date {
+    display: block;
+    color: #9a9a9a;
+    margin-bottom: 15px;
+
+    &--with-detail {
+      margin-top: 15px;
+    }
+  }
+
+  &-image {
+    width: 100%;
+  }
+
+  &-short-text {
+    margin-top: 2rem;
+    font-size: 125%;
+    font-weight: 300;
+  }
+
+  &-text {
+    img {
+      width: 100%!important;
+      height: auto!important;
+      margin: 10px 0;
+    }
+  }
+}

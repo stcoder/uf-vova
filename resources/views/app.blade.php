@@ -3,8 +3,15 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Универсальные бойцы</title>
+	<title>@yield('title')Универсальные бойцы Екатерибург</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta name="description" content="@yield('meta-description') Универсальные бойцы, Екатеринбург.">
+  <meta name="keywords" content="@yield('meta-keywords') универсальные бойцы, бойцы екатерибург, универсальные бойцы екатеринбург">
+  <meta name="og:locale" content="ru_RU">
+
+	@yield('meta-soc')
+
 	<link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="/bower_components/owl.carousel/dist/assets/owl.carousel.min.css">
 	<link rel="stylesheet" href="/bower_components/owl.carousel/dist/assets/owl.theme.default.min.css">
@@ -30,7 +37,7 @@
 				<ul class="nav navbar-nav navbar-right">
 					<li><a class="nav-control" href="/#about" data-nav-section="about"><span>О клубе</span></a></li>
 					<li><a class="nav-control" href="/#price" data-nav-section="price"><span>Расписание и стоимость</span></a></li>
-					<li><a class="nav-control" href="/#posts" data-nav-section="posts"><span>Лента событий</span></a></li>
+					<li><a class="nav-control" href="{{ route('news.dashboard') }}" data-nav-section="news"><span>Новости</span></a></li>
 					<li><a class="nav-control" href="/#reviews" data-nav-section="reviews"><span>Отзывы</span></a></li>
 					<li><a class="nav-control" href="/#contacts" data-nav-section="contacts"><span>Контакты</span></a></li>
 				</ul>
@@ -52,7 +59,7 @@
 				<ul class="footer-links list-unstyled">
 					<li><a href="/#about" data-nav-section="about"><span>О клубе</span></a></li>
 					<li><a href="/#price" data-nav-section="price"><span>Расписание и стоимость</span></a></li>
-					<li><a href="/#posts" data-nav-section="posts"><span>Лента событий</span></a></li>
+					<li><a href="{{ route('news.dashboard') }}" data-nav-section="news"><span>Новости</span></a></li>
 					<li><a href="/#reviews" data-nav-section="reviews"><span>Отзывы</span></a></li>
 					<li><a href="/#contacts" data-nav-section="contacts"><span>Контакты</span></a></li>
 				</ul>

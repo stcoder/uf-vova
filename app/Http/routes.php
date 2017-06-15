@@ -25,6 +25,10 @@ Route::controllers([
 	'password' => 'Auth\PasswordController',
 ]);
 
+Route::get('/novosti', ['as' => 'news.dashboard', 'uses' => '\App\Http\Controllers\NewsController@dashboard']);
+
+Route::get('/novosti/{date}/{news}.html', ['as' => 'news', 'uses' => '\App\Http\Controllers\NewsController@detail']);
+
 Route::get('{page}.html', ['as' => 'page', 'uses' => '\App\Http\Controllers\PageController@showPage']);
 
 Route::get('show_attachment', [

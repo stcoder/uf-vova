@@ -42,6 +42,8 @@ class Page extends Model implements SluggableInterface
 
     protected $guarded = ['*'];
 
+    protected $dates = ['published_at'];
+
     protected $fillable = [
         'title',
         'published',

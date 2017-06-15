@@ -54,7 +54,8 @@ return array(
         'small' => 'Intervention\Image\Templates\Small',
         'medium' => 'Intervention\Image\Templates\Medium',
         'large' => 'Intervention\Image\Templates\Large',
-        'big_slide' => 'App\Image\Templates\BigSlide'
+        'big_slide' => 'App\Image\Templates\BigSlide',
+        'preview-by-news' => 'App\Image\Templates\PreviewByNews'
     ),
 
     /*

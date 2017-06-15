@@ -7,6 +7,7 @@ use App\Slide;
 use Illuminate\View\View;
 use Request;
 use App\Post;
+use App\News;
 
 /**
  * Class HomeController
@@ -28,15 +29,12 @@ class HomeController extends Controller {
 	 */
 	public function index()
 	{
-		$posts = $this->__getPosts();
 		$review = $this->__getReview();
 		$data = [
-			'posts' => $posts,
 			'review' => $review,
 			'slides' => Slide::orderBy('sort', 'asc')->get(),
 			'histories' => HistoryDate::orderBy('order', 'asc')->get(),
-			'schedule_and_cost' => ScheduleAndCost::orderBy('order', 'asc')->get(),
-			'next_posts' => $posts->nextPageUrl()
+			'schedule_and_cost' => ScheduleAndCost::orderBy('order', 'asc')->get()
 		];
 
 		return view('welcome', $data);
@@ -47,7 +45,7 @@ class HomeController extends Controller {
 	 */
 	protected function __getPosts()
 	{
-		$posts = Post::withTrashed()->orderBy('date', 'DESC')->simplePaginate(8);
+		$posts = News::withTrashed()->orderBy('published_at', 'DESC')->simplePaginate(8);
 		$posts->setPath(route('load_next_posts'));
 
 		return $posts;
@@ -77,8 +75,10 @@ class HomeController extends Controller {
 		$reviews = $where->get();
 		$review = null;
 
-		if ($reviews) {
+		if ($reviews->count() > 0) {
 			$review = $reviews[0];
+		} else {
+			return [];
 		}
 
 		if (is_null($review_ids)) {
@@ -90,6 +90,7 @@ class HomeController extends Controller {
 		}
 
 		if (sizeof($review_ids) < 30) {
+			dd($review_ids, $review);
 			array_push($review_ids, $review->id);
 		}
 
