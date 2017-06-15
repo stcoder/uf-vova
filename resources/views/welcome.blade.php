@@ -1,5 +1,18 @@
 @extends('app')
 
+@section('meta-soc')
+<meta property="og:title" content="Универсальные бойцы Екатеринбург" />
+<meta property="og:type" content="article" />
+<meta property="og:site_name" content="Универсальные бойцы Екатеринбург" />
+<meta property="og:url" content="article" />
+<meta property="og:description" content="Спортивный клуб Универсальные бойцы в г. Екатеринбург" />
+<meta property="og:image" content="{{ asset('images/logo-big.png') }}" />
+
+<meta name="twitter:title" content="Универсальные бойцы Екатеринбург" />
+<meta name="twitter:description" content="Спортивный клуб Универсальные бойцы в г. Екатеринбург" />
+<meta name="twitter:image" content="{{ asset('images/logo-big.png') }}" />
+@endsection
+
 @section('content')
 {{-- Start slider --}}
 <div id="slider" data-section="slider">
@@ -148,51 +161,7 @@
 </div>
 {{-- End price --}}
 
-{{-- Start posts --}}
-<div id="posts" data-section="posts" class="posts" style="background-color: #44465B; background-image: url('http://subtlepatterns2015.subtlepatterns.netdna-cdn.com/patterns/ravenna.png'); background-attachment: fixed;">
-  <div class="container">
-    {{-- Start post header --}}
-    <div class="row">
-      <div class="col-sm-12">
-        <div class="history">
-          <div class="section-header">
-            <h2 class="section-header-title text-center">Лента событий</h2>
-            <h3 class="section-header-title-sub text-center">наши последние записи</h3>
-            <div class="section-header-divider">
-              <span class="section-header-divider-left"></span>
-              <i class="section-header-divider-icon glyphicon glyphicon-star"></i>
-              <span class="section-header-divider-right"></span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    {{-- End post header --}}
-
-    {{-- Start items --}}
-    <div class="row">
-      <div class="posts-container">
-        @foreach($posts as $key => $post)
-          <div class="col-lg-3 col-md-4 col-sm-6">
-            @include('post.item', ['post' => $post])
-          </div>
-        @endforeach
-      </div>
-      @if($next_posts)
-      <div class="col-sm-12">
-        <div class="action-next-loader loader-posts">
-          <button type="button" id="load_next_posts" data-url="{{$next_posts}}" data-loading-text="Загружаю..." class="btn btn-primary" autocomplete="off">
-            Показать еще
-          </button>
-        </div>
-      </div>
-      @endif
-    </div>
-    {{-- End items --}}
-  </div>
-</div>
-{{-- End posts --}}
-
+@if($review)
 {{-- Start reviews --}}
 <div id="reviews" data-section="reviews" class="reviews">
   <div class="container">
@@ -237,6 +206,7 @@
   </div>
 </div>
 {{-- End reviews --}}
+@endif
 
 {{-- Start contacts --}}
 <div id="contacts" data-section="contacts" class="contacts" style="background-image: url(//subtlepatterns2015.subtlepatterns.netdna-cdn.com/patterns/cork-wallet.png); background-attachment: fixed;">

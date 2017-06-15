@@ -50,28 +50,40 @@ class Slide extends Model
 
     public function setImageAttribute($value)
     {
-        if ($this->image)
-            $this->image->delete();
+        if (
+            is_null($value) || empty($value) || ($this->header_image && $value != $this->header_image->getPath())
+        ) {
+            $this->header_image->delete();
+        }
 
-        if (!is_null($value)) {
+        $result = '';
+
+        if (!is_null($value) && !empty($value)) {
             $imageName = last(explode('/', $value));
-            $targetDirectory = config('admin.imagesUploadDirectory') . '/slides';
+            $targetDirectory = config('admin.imagesUploadDirectory') . '/slides/' . $this->id;
             $toDirectory = public_path($targetDirectory);
 
             if (!\File::exists($toDirectory)) {
-                \File::makeDirectory($toDirectory);
+                \File::makeDirectory($toDirectory, 0755, true);
             }
 
-            if (\File::exists($value)) {
+            if (\File::exists(public_path($value))) {
                 \File::move(public_path($value), $toDirectory . '/' . $imageName);
             }
 
-            $this->attributes['image'] = $targetDirectory . '/' . $imageName;
+            $result = $targetDirectory . '/' . $imageName;
         }
+
+        $this->attributes['image'] = $result;
     }
 
     public function getImageAttribute($value)
     {
-        return $value ? new Image($value) : null;
+        $img = new Image($value, 'slides', $this->id);
+        if ($img->exists()) {
+            return $img;
+        } else {
+            return null;
+        }
     }
 }

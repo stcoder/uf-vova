@@ -22,14 +22,26 @@ class Image
      */
     protected $info = [];
 
+    protected $parent_id = null;
+
+    protected $prefix = '';
+
     /**
      * Image constructor.
      * @param $file_path
      */
-    public function __construct($file_path)
+    public function __construct($file_path, $prefix = '', $parent_id = null)
     {
         $this->file_path = $file_path;
         $this->info = $this->info();
+
+        if ($parent_id) {
+            $this->parent_id = $parent_id;
+        }
+
+        if ($prefix) {
+            $this->prefix = $prefix;
+        }
 
         if ($this->info) {
             $this->filename = $this->info['name'];
@@ -99,7 +111,17 @@ class Image
      */
     public function thumbnail($template)
     {
-        return route('imagecache', [$template, 'slides/' . $this->getFileName()]);
+        $path = '';
+        if ($this->prefix) {
+            $path = $this->prefix . '/';
+        }
+
+        if ($this->parent_id) {
+            $path .= $this->parent_id . '/';
+        }
+
+        $path .= $this->getFileName();
+        return route('imagecache', [$template, $path]);
     }
 
     /**
