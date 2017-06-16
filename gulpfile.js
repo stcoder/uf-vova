@@ -15,4 +15,6 @@ elixir(function(mix) {
     mix.less('app.less');
     mix.scripts('myckeditor.js', 'public/js/myckeditor.js');
     mix.browserify('app.js');
+
+    mix.version(['css/app.css', 'js/app.js']);
 });
