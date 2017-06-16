@@ -8,4 +8,8 @@
 /public/css
 /public/images/uploads
 /public/fonts
+/public/build
 composer.lock
+review.out
+posts.out
+feedbacks.out
