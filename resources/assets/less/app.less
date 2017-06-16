@@ -1295,3 +1295,93 @@ html, body {
     }
   }
 }
+
+.form-group.required .control-label:after {
+  content:"*";
+  color:red;
+}
+
+#feedback {
+  position: fixed;
+  bottom: 50px;
+  right: 50px;
+  z-index: 2;
+}
+
+.feedback {
+  &-circle {
+    box-sizing: content-box;
+    border: 2px solid @brand-primary;
+    width: 150px;
+    height: 150px;
+    bottom: -25px;
+    right: 10px;
+    position: absolute;
+    border-radius: 100%;
+    opacity: .5;
+    transform-origin: center;
+    transition: all .5s;
+    animation: circle-anim 2.4s infinite ease-in-out;
+  }
+
+  &-fill {
+    box-sizing:content-box;
+    background-color: @brand-primary;
+    width: 100px;
+    height: 100px;
+    bottom: 0px;
+    right: 35px;
+    position: absolute;
+    border-radius: 100%;
+    border: 2px solid transparent;
+    transform-origin: center;
+    transition: all .5s;
+    animation: circle-fill-anim 2.3s infinite ease-in-out;
+  }
+
+  &-icon {
+    box-sizing: content-box;
+    width: 72px;
+    height: 72px;
+    bottom: 14px;
+    right: 49px;
+    position: absolute;
+    border-radius: 100%;
+    border: 2px solid transparent;
+    transform-origin: center;
+    background: @brand-primary;
+    cursor: pointer;
+    opacity: .7;
+
+    &:hover {
+      opacity: 1;
+    }
+
+    > span {
+      transform-origin: center;
+      box-sizing: content-box;
+      width: 72px;
+      height: 72px;
+      color: #fff;
+      text-align: center;
+      line-height: 72px;
+      font-size: 36px;
+      animation-name: tossing 1.5s infinite ease-in-out;
+    }
+  }
+}
+
+@keyframes circle-anim {
+  0% {transform: rotate(0deg) scale(0.5) skew(1deg); opacity: .1;}
+  30% {transform: rotate(0deg) scale(0.7) skew(1deg); opacity: .5;}
+  100% {transform: rotate(0deg) scale(1) skew(1deg); opacity: .1;}}
+
+@keyframes circle-fill-anim {
+  0% {transform: rotate(0deg) scale(0.7) skew(1deg);opacity: .2;}
+  50% {transform: rotate(0deg) scale(1) skew(1deg);opacity: .2;}
+  100% {transform: rotate(0deg) scale(0.7) skew(1deg);opacity: .2;}}
+
+@keyframes tossing {
+  0% {transform: rotate(-8deg);}
+  50% {transform: rotate(8deg);}
+  100% {transform: rotate(-8deg);}}

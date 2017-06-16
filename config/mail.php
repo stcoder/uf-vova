@@ -54,7 +54,7 @@ return [
 	|
 	*/
 
-	'from' => ['address' => null, 'name' => null],
+	'from' => ['address' => env('MAIL_USERNAME'), 'name' => 'Уведомление с сайта'],
 
 	/*
 	|--------------------------------------------------------------------------
@@ -67,7 +67,7 @@ return [
 	|
 	*/
 
-	'encryption' => 'tls',
+	'encryption' => 'ssl',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -120,5 +120,7 @@ return [
 	*/
 
 	'pretend' => false,
+
+	'feedback_send_to' => env('MAIL_FEEDBACK_SEND_TO')
 
 ];

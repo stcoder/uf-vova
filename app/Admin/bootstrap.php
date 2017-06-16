@@ -12,3 +12,4 @@
  */
 
 Column::register('published', \App\Columns\Published::class);
+Column::register('sended', \App\Columns\Sended::class);

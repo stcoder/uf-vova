@@ -2,6 +2,12 @@ var $modal = $("#modal");
 var $navbar = $('#navbar > ul');
 var $posts = $('#posts');
 
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+
 $modal.on('hidden.bs.modal', function() {
   $modal.find('.modal-body').html('');
 });
@@ -511,3 +517,100 @@ AudioPlayer.prototype.setTime = function(len) {
 
 window.audio_player = new AudioPlayer($('.audio-player'));
 /** End audio player **/
+
+window.showFeedback = function() {
+  var $form = $('<form>', {'data-toggle': "validator", role: "form"});
+  var $alert = $('<div/>', {role: "alert", class: "alert alert-danger", style: 'display: none;'});
+  var $success = $('<div/>', {role: "alert", class: "alert alert-success", style: 'display: none;'});
+  $modal.find('.modal-body').append($alert);
+  $modal.find('.modal-body').append($success);
+
+  var $inputs = {
+    'name': $('<input/>', {class: 'form-control', id: 'feedback-name', required: true, type: 'text'}),
+    'age': $('<input/>', {class: 'form-control', id: 'feedback-age', required: true, type: 'number'}),
+    'phone': $('<input/>', {class: 'form-control', id: 'feedback-phone', required: true, type: 'number'}),
+    'question': $('<textarea/>', {class: 'form-control', id: 'feedback-question', required: false}),
+  };
+  
+  var $labels = {
+    'name': $('<label/>', {for: 'feedback-name', text: 'Имя', class: 'control-label'}),
+    'age': $('<label/>', {for: 'feedback-age', text: 'Возраст', class: 'control-label'}),
+    'phone': $('<label/>', {for: 'feedback-phone', text: 'Телефон', class: 'control-label'}),
+    'question': $('<label/>', {for: 'feedback-question', text: 'Ваш вопрос', class: 'control-label'})
+  };
+  
+  var $formGroup = $('<div/>', {class: 'form-group'});
+  var $button = $('<button/>', {class: 'btn btn-primary', 'data-loading-text': 'Отправляю данные...', 'text': 'Отправить'});
+
+  for(var $inputKey in $inputs) {
+    var $input = $inputs[$inputKey];
+    var $label = $labels[$inputKey];
+    var $row = $formGroup.clone();
+
+    if ($input.attr('required')) {
+      $row.addClass('required');
+    }
+
+    if ($label) {
+      $row.append($label);
+    }
+    
+    $row.append($input);
+    
+    $form.append($row);
+  }
+
+  function handler(event) {
+    event.preventDefault();
+    $alert.hide();
+    var requireds = false;
+    var data = {};
+
+    for(var $inputKey in $inputs) {
+      var $input = $inputs[$inputKey];
+      if ($input.attr('required')) {
+        if (!$input.val()) {
+          requireds = true;
+        }
+      }
+
+      data[$inputKey] = $input.val();
+    }
+
+    if (requireds) {
+      $alert.text('Заполните поля отмеченные звездочкой').show();
+      return;
+    }
+
+    $button.button('loading');
+    var xhr = $.post('/feedback/add', data);
+    xhr.then(function(res) {
+      if (res && res.ok) {
+        $form.remove();
+        $success.text('Спасибо за ваше обращение, в ближайшее время с вами свяжется Инструктор для уточнения вопросов и записи.').show();
+        setTimeout(function() {
+          $modal.modal('hide');
+        }, 5000);
+      }
+    }).fail(function(err) {
+      if (err.status >= 500) {
+        $alert.text('На сервере возникли ошибки. Пожалуйста, повторите позже.').show();
+        return;
+      }
+
+      if (err.status == 422) {
+        $alert.text('Заполните обязательные поля.').show();
+        return;
+      }
+    }).always(function() {
+      $button.button('reset');
+    });
+  }
+
+  $form.append($button);
+  $form.submit(handler);
+
+  $modal.find('.modal-title').html('Обратная связь');
+  $modal.find('.modal-body').append($form);
+  $modal.modal('show');
+}

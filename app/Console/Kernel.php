@@ -12,7 +12,8 @@ class Kernel extends ConsoleKernel {
 	 */
 	protected $commands = [
 		'App\Console\Commands\Inspire',
-		'App\Console\Commands\VkReviewsLoad'
+		'App\Console\Commands\VkReviewsLoad',
+		'App\Console\Commands\FeedbackSender',
 	];
 
 	/**
@@ -23,6 +24,11 @@ class Kernel extends ConsoleKernel {
 	 */
 	protected function schedule(Schedule $schedule)
 	{
+		$file = app_path() . '/../feedbacks.out';
+		$schedule->command('feedback:sender')
+      ->everyFiveMinutes()
+			->sendOutputTo($file);
+
 		$file = app_path() . '/../review.out';
 		$schedule->command('vk:load_reviews')
 			->hourly()

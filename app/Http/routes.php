@@ -29,6 +29,8 @@ Route::get('/novosti', ['as' => 'news.dashboard', 'uses' => '\App\Http\Controlle
 
 Route::get('/novosti/{date}/{news}.html', ['as' => 'news', 'uses' => '\App\Http\Controllers\NewsController@detail']);
 
+Route::post('/feedback/add', ['as' => 'feedback.add', 'uses' => '\App\Http\Controllers\FeedbackController@add']);
+
 Route::get('{page}.html', ['as' => 'page', 'uses' => '\App\Http\Controllers\PageController@showPage']);
 
 Route::get('show_attachment', [
