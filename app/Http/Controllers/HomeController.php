@@ -90,7 +90,6 @@ class HomeController extends Controller {
 		}
 
 		if (sizeof($review_ids) < 30) {
-			dd($review_ids, $review);
 			array_push($review_ids, $review->id);
 		}
 
