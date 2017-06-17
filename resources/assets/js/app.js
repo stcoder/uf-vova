@@ -519,6 +519,9 @@ window.audio_player = new AudioPlayer($('.audio-player'));
 /** End audio player **/
 
 window.showFeedback = function() {
+  // Открыли форму
+  yaCounter38753525.reachGoal('FEEDBACK_OPEN');
+
   var $form = $('<form>', {'data-toggle': "validator", role: "form"});
   var $alert = $('<div/>', {role: "alert", class: "alert alert-danger", style: 'display: none;'});
   var $success = $('<div/>', {role: "alert", class: "alert alert-success", style: 'display: none;'});
@@ -562,6 +565,9 @@ window.showFeedback = function() {
 
   function handler(event) {
     event.preventDefault();
+    // Попытка отправить форму
+    yaCounter38753525.reachGoal('FEEDBACK_FORM_SEND');
+
     $alert.hide();
     var requireds = false;
     var data = {};
@@ -586,6 +592,9 @@ window.showFeedback = function() {
     var xhr = $.post('/feedback/add', data);
     xhr.then(function(res) {
       if (res && res.ok) {
+        // Успех при отправке формы
+        yaCounter38753525.reachGoal('FEEDBACK_FORM_SECCUESS');
+        
         $form.remove();
         $success.text('Спасибо за ваше обращение, в ближайшее время с вами свяжется Инструктор для уточнения вопросов и записи.').show();
         setTimeout(function() {
@@ -593,6 +602,9 @@ window.showFeedback = function() {
         }, 5000);
       }
     }).fail(function(err) {
+      // Ошибка при отправке формы
+      yaCounter38753525.reachGoal('FEEDBACK_FORM_ERROR');
+
       if (err.status >= 500) {
         $alert.text('На сервере возникли ошибки. Пожалуйста, повторите позже.').show();
         return;
