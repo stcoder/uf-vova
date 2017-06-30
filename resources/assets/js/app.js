@@ -541,7 +541,7 @@ window.showFeedback = function() {
     'phone': $('<label/>', {for: 'feedback-phone', text: 'Телефон', class: 'control-label'}),
     'question': $('<label/>', {for: 'feedback-question', text: 'Ваш вопрос', class: 'control-label'})
   };
-  
+
   var $formGroup = $('<div/>', {class: 'form-group'});
   var $button = $('<button/>', {class: 'btn btn-primary', 'data-loading-text': 'Отправляю данные...', 'text': 'Отправить'});
 
@@ -562,6 +562,13 @@ window.showFeedback = function() {
     
     $form.append($row);
   }
+
+  var $acceptRow = $('<div/>', {class: 'form-group'});
+  var $acceptInput = $('<input/>', {type: 'checkbox', 'id': 'accept', checked: true});
+  var $acceptLabel = $('<label/>', {from: 'accept', class: 'control-label', html: '&nbsp;Я даю свое согласие на <a href="/soglasie-na-obrabotku-personalnyh-dannyh.html" target="_blank">обработку персональных данных</a>'});
+  $acceptLabel.prepend($acceptInput);
+  $acceptRow.append($acceptLabel);
+  $form.append($acceptRow);
 
   function handler(event) {
     event.preventDefault();
@@ -586,6 +593,12 @@ window.showFeedback = function() {
     if (requireds) {
       $alert.text('Заполните поля отмеченные звездочкой').show();
       return;
+    }
+
+    var isAccept = $acceptInput.prop('checked');
+    if (!isAccept) {
+      $alert.text('Подтвердите свое согласие на обработку персональных данных').show();
+      return; 
     }
 
     $button.button('loading');
